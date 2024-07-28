@@ -1,0 +1,30 @@
+server:
+  port: 9002
+eureka:
+  client:
+    fetchRegistry: true
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: http://localhost:9000/eureka
+  instance:
+    instance-id: ${spring.application.name}:${instanceId:${random.value}}
+    preferIpAddress: true
+spring:
+  application:
+    name: gatewayService
+  cloud:
+    gateway:
+      mvc:
+        routes[0]:
+          id: discoveryServer
+          predicates[0]: Path=/eureka/web
+          filters[0]: SetPath=/
+          uri: http://localhost:9000
+        routes[1]:
+          id: questionService
+          predicates[0]: Path=/question-service/api/v1/**
+          uri: lb://QUESTIONSERVICE
+        routes[2]:
+          id: managementService
+          predicates[0]: Path=/management-service/api/v1/**
+          uri: lb://MANAGEMENTSERVICE
