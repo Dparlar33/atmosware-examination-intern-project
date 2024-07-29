@@ -1,7 +1,7 @@
 package com.atmosware.managementService.core.config;
 
 import com.atmosware.managementService.core.filter.JwtAuthFilter;
-import com.atmosware.managementService.core.services.SecurityService;
+import com.atmosware.managementService.core.security.SecurityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

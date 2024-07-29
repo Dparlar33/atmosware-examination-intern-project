@@ -1,7 +1,7 @@
 package com.atmosware.managementService.api.controller;
 
 import com.atmosware.managementService.business.abstracts.AuthService;
-import com.atmosware.managementService.business.dtos.LoginRequest;
+import com.atmosware.managementService.business.dtos.requests.user.LoginRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

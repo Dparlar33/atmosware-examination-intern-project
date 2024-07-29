@@ -1,5 +1,6 @@
 package com.atmosware.managementService.entities;
 
+import com.atmosware.managementService.core.entites.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,8 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
-import java.util.Set;
-import java.util.UUID;
+import java.util.List;
 
 @Entity
 @Table(name="roles")
@@ -16,18 +16,13 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Role implements GrantedAuthority {
-
-    @Id
-    @GeneratedValue(generator = "UUID")
-    @Column(name="id")
-    private UUID id;
+public class Role extends BaseEntity implements GrantedAuthority {
 
     @Column(name="name")
     private String name;
 
-    @ManyToMany(mappedBy = "authorities")
-    private Set<User> users;
+    @OneToMany(mappedBy = "role",cascade = CascadeType.ALL)
+    private List<UserRole> userRoles;
 
     @Override
     public String getAuthority() {

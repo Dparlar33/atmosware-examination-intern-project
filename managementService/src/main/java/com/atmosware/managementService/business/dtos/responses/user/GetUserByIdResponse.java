@@ -1,6 +1,5 @@
-package com.atmosware.managementService.business.dtos;
+package com.atmosware.managementService.business.dtos.responses.user;
 
-import com.atmosware.managementService.entities.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +11,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-public class GetAllUsersResponse {
+public class GetUserByIdResponse {
     private UUID id;
     private String email;
+    private String roleName;
 }

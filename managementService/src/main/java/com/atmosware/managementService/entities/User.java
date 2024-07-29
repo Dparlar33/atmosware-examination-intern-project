@@ -1,14 +1,18 @@
 package com.atmosware.managementService.entities;
 
+import com.atmosware.managementService.core.entites.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Set;
-import java.util.UUID;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Table(name="users")
 @Entity
@@ -16,12 +20,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class User implements UserDetails {
-
-    @Column(name="id")
-    @Id
-    @GeneratedValue(generator = "UUID")
-    private UUID id;
+public class User extends BaseEntity implements UserDetails {
 
     @Column(name="password")
     private String password;
@@ -29,14 +28,15 @@ public class User implements UserDetails {
     @Column(name="email")
     private String email;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name="user_roles",
-            joinColumns = @JoinColumn(name="user_id"),
-            inverseJoinColumns = @JoinColumn(name="role_id")
-    )
-    private Set<Role> authorities;
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
+    private List<UserRole> authorities;
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities.stream()
+                .map(role -> new SimpleGrantedAuthority(role.getRole().getName()))
+                .collect(Collectors.toList());
+    }
 
     @Override
     public String getUsername() {

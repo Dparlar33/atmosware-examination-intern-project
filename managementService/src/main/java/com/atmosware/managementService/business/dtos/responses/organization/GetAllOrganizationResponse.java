@@ -1,0 +1,22 @@
+package com.atmosware.managementService.business.dtos.responses.organization;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.List;
+import java.util.UUID;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+public class GetAllOrganizationResponse {
+    private UUID id;
+    private UUID roleId;
+    private String Name;
+    private String email;
+    private String password;
+    private List<String> candidateEmailList;
+}

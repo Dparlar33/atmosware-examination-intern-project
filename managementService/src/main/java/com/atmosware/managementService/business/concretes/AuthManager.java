@@ -2,9 +2,7 @@ package com.atmosware.managementService.business.concretes;
 
 
 import com.atmosware.managementService.business.abstracts.AuthService;
-import com.atmosware.managementService.business.abstracts.UserService;
-import com.atmosware.managementService.business.dtos.LoggedInResponse;
-import com.atmosware.managementService.business.dtos.LoginRequest;
+import com.atmosware.managementService.business.dtos.requests.user.LoginRequest;
 import com.atmosware.managementService.business.messages.AuthMessages;
 import com.atmosware.managementService.core.services.JwtService;
 import com.atmosware.managementService.core.utilities.exceptions.types.BusinessException;
@@ -25,7 +23,6 @@ import java.util.Optional;
 public class AuthManager implements AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
-    private final UserService userService;
     private final UserRepository userRepository;
 
     @Override

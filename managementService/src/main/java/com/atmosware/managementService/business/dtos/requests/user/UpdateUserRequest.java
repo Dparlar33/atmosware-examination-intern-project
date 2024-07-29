@@ -1,4 +1,4 @@
-package com.atmosware.managementService.business.dtos;
+package com.atmosware.managementService.business.dtos.requests.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginRequest {
+public class UpdateUserRequest {
     private String email;
     private String password;
 }

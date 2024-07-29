@@ -1,4 +1,4 @@
-package com.atmosware.managementService.core.services;
+package com.atmosware.managementService.core.security;
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 

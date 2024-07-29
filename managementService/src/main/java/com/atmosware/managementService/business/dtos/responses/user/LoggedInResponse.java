@@ -1,4 +1,4 @@
-package com.atmosware.managementService.business.dtos;
+package com.atmosware.managementService.business.dtos.responses.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

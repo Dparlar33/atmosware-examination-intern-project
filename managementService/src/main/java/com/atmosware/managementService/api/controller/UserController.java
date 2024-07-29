@@ -1,14 +1,12 @@
 package com.atmosware.managementService.api.controller;
 
 import com.atmosware.managementService.business.abstracts.UserService;
-import com.atmosware.managementService.business.dtos.GetAllUsersResponse;
-import com.atmosware.managementService.business.dtos.GetUserByIdResponse;
-import com.atmosware.managementService.business.dtos.RegisterRequest;
-import com.atmosware.managementService.entities.User;
+import com.atmosware.managementService.business.dtos.requests.user.UpdateUserRequest;
+import com.atmosware.managementService.business.dtos.responses.user.GetUserByIdResponse;
+import com.atmosware.managementService.business.dtos.requests.user.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -20,6 +18,11 @@ public class UserController {
     @PostMapping("/register")
     public void register(@RequestBody RegisterRequest request) {
         userService.register(request);
+    }
+
+    @PutMapping("/update")
+    public void update(@RequestBody UpdateUserRequest updateUserRequest) {
+        this.userService.updateUser(updateUserRequest);
     }
 
     @GetMapping("/getById/{id}")

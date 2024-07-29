@@ -1,19 +1,17 @@
 package com.atmosware.managementService.core.utilities.mapping;
 
-import com.atmosware.managementService.business.dtos.GetAllUsersResponse;
-import com.atmosware.managementService.business.dtos.GetUserByIdResponse;
-import com.atmosware.managementService.business.dtos.RegisterRequest;
+import com.atmosware.managementService.business.dtos.requests.user.RegisterRequest;
+import com.atmosware.managementService.business.dtos.requests.user.UpdateUserRequest;
+import com.atmosware.managementService.business.dtos.responses.user.GetUserByIdResponse;
 import com.atmosware.managementService.entities.User;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
+@Mapper(config = MapStructureService.class)
 public interface UserMapper {
-    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-    @Mapping(source = "email", target = "email")
     User registerRequestToUser(RegisterRequest registerRequest);
+
+    User updateUserRequestToUser(UpdateUserRequest updateUserRequest);
 
     GetUserByIdResponse userToGetUserById(User user);
 }

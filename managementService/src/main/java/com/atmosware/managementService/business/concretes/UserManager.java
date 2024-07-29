@@ -1,12 +1,18 @@
 package com.atmosware.managementService.business.concretes;
 
+import com.atmosware.managementService.business.abstracts.RoleService;
+import com.atmosware.managementService.business.abstracts.UserRoleService;
 import com.atmosware.managementService.business.abstracts.UserService;
-import com.atmosware.managementService.business.dtos.GetUserByIdResponse;
-import com.atmosware.managementService.business.dtos.RegisterRequest;
+import com.atmosware.managementService.business.dtos.requests.user.UpdateUserRequest;
+import com.atmosware.managementService.business.dtos.responses.role.GetRoleByIdResponse;
+import com.atmosware.managementService.business.dtos.responses.user.GetUserByIdResponse;
+import com.atmosware.managementService.business.dtos.requests.user.RegisterRequest;
 import com.atmosware.managementService.business.messages.AuthMessages;
+import com.atmosware.managementService.business.rules.UserBusinessRules;
 import com.atmosware.managementService.core.utilities.exceptions.types.BusinessException;
 import com.atmosware.managementService.core.utilities.mapping.UserMapper;
 import com.atmosware.managementService.dataAccess.UserRepository;
+import com.atmosware.managementService.entities.Role;
 import com.atmosware.managementService.entities.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,15 +26,26 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 public class UserManager implements UserService {
+
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserRoleService userRoleService;
+    private final RoleService roleService;
+    private final UserBusinessRules userBusinessRules;
+    private final UserMapper userMapper;
 
     @Override
     public void register(RegisterRequest request) {
-        User user = UserMapper.INSTANCE.registerRequestToUser(request);
+        this.userBusinessRules.userEmailCanNotBeDuplicated(request.getEmail());
+
+        User user = this.userMapper.registerRequestToUser(request);
+
         String encodedPassword = passwordEncoder.encode(request.getPassword());
         user.setPassword(encodedPassword);
         userRepository.save(user);
+
+        Role role = this.roleService.getRoleById(request.getRoleId());
+        this.userRoleService.addUserRole(user,role);
     }
 
     @Override
@@ -37,7 +54,18 @@ public class UserManager implements UserService {
         if (user.isPresent()) {
             throw new BusinessException("User not found");
         }
-        return  UserMapper.INSTANCE.userToGetUserById(user.get());
+        return  this.userMapper.userToGetUserById(user.get());
+    }
+
+    @Override
+    public void updateUser(UpdateUserRequest updateUserRequest) {
+        this.userBusinessRules.isUserExistByEmail(updateUserRequest.getEmail());
+
+        User user = this.userMapper.updateUserRequestToUser(updateUserRequest);
+
+        String encodedPassword = passwordEncoder.encode(updateUserRequest.getPassword());
+        user.setPassword(encodedPassword);
+        userRepository.save(user);
     }
 
     @Override

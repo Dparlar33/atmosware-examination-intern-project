@@ -1,4 +1,4 @@
-package com.atmosware.managementService.business.dtos;
+package com.atmosware.managementService.business.dtos.requests.organization;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,8 +11,9 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-public class GetUserByIdResponse {
-    private UUID id;
+public class CreateOrganizationRequest {
+    private UUID roleId;
+    private String name;
     private String email;
-    private String roleName;
+    private String password;
 }
