@@ -1,7 +1,6 @@
 package com.atmosware.managementService.business.concretes;
 
 import com.atmosware.managementService.business.abstracts.UserRoleService;
-import com.atmosware.managementService.dataAccess.UserRepository;
 import com.atmosware.managementService.dataAccess.UserRoleRepository;
 import com.atmosware.managementService.entities.Role;
 import com.atmosware.managementService.entities.User;

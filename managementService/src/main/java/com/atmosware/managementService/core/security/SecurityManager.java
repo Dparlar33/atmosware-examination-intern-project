@@ -23,7 +23,7 @@ public class SecurityManager implements SecurityService {
         http.authorizeHttpRequests(x-> x
                 .requestMatchers(WHITE_LIST_URLS).permitAll()
                 .requestMatchers(HttpMethod.GET).permitAll()
-                .requestMatchers(HttpMethod.PUT,"/management-service/api/v1/organizations/add").hasAnyAuthority("ADMIN")
+                .requestMatchers(HttpMethod.PUT,"/management-service/api/v1/users/register").hasAnyAuthority("ADMIN")
                 .anyRequest().authenticated()
         );
         return http;
