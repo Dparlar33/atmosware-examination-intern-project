@@ -1,10 +1,10 @@
 package com.atmosware.managementService.business.concretes;
 
 
+import com.atmosware.core.utils.JwtService;
 import com.atmosware.managementService.business.abstracts.AuthService;
 import com.atmosware.managementService.business.dtos.requests.user.LoginRequest;
 import com.atmosware.managementService.business.messages.AuthMessages;
-import com.atmosware.managementService.core.services.JwtService;
 import com.atmosware.managementService.core.utilities.exceptions.types.BusinessException;
 import com.atmosware.managementService.dataAccess.UserRepository;
 import com.atmosware.managementService.entities.User;

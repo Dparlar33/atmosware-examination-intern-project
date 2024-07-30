@@ -1,16 +1,16 @@
-package com.atmosware.managementService.core.config;
+package com.atmosware.core.config;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-@RequiredArgsConstructor
-public class ApplicationConfiguration {
+public class BaseApplicationConfig
+{
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder()
+    {
         return new BCryptPasswordEncoder();
     }
 }
