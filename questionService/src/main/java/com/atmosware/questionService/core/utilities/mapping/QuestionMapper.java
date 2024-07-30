@@ -6,12 +6,11 @@ import com.atmosware.questionService.business.dtos.responses.question.GetAllQues
 import com.atmosware.questionService.business.dtos.responses.question.GetQuestionByIdResponse;
 import com.atmosware.questionService.entities.Question;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
+@Mapper(config = MapStructureService.class)
 public interface QuestionMapper {
-    QuestionMapper INSTANCE = Mappers.getMapper(QuestionMapper.class);
 
+    UpdateQuestionRequest questionToUpdateQuestionRequest(GetQuestionByIdResponse getQuestionByIdResponse);
     Question createQuestionRequestToQuestion(CreateQuestionRequest createQuestionRequest);
     Question updateQuestionRequestToQuestion(UpdateQuestionRequest updateQuestionRequest);
     GetAllQuestionsResponse questionToGetAllQuestionsResponse(Question question);

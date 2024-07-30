@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface OptionService {
-    void addOption(CreateOptionRequest createOptionRequest);
+    void addOption(CreateOptionRequest createOptionRequest) throws Exception;
     List<GetAllOptionsResponse> getAllOptions();
     GetOptionByIdResponse getOptionById(UUID optionId) throws Exception;
     void updateOption(UpdateOptionRequest updateOptionRequest);
