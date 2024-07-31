@@ -3,10 +3,9 @@ package com.atmosware.managementService.business.concretes;
 import com.atmosware.managementService.business.abstracts.RoleService;
 import com.atmosware.managementService.business.abstracts.UserRoleService;
 import com.atmosware.managementService.business.abstracts.UserService;
-import com.atmosware.managementService.business.dtos.requests.user.UpdateUserRequest;
-import com.atmosware.managementService.business.dtos.responses.role.GetRoleByIdResponse;
-import com.atmosware.managementService.business.dtos.responses.user.GetUserByIdResponse;
 import com.atmosware.managementService.business.dtos.requests.user.RegisterRequest;
+import com.atmosware.managementService.business.dtos.requests.user.UpdateUserRequest;
+import com.atmosware.managementService.business.dtos.responses.user.GetUserByIdResponse;
 import com.atmosware.managementService.business.messages.AuthMessages;
 import com.atmosware.managementService.business.rules.UserBusinessRules;
 import com.atmosware.managementService.core.utilities.exceptions.types.BusinessException;
@@ -50,11 +49,8 @@ public class UserManager implements UserService {
 
     @Override
     public GetUserByIdResponse findUserById(UUID id) {
-        Optional<User> user = this.userRepository.findById(id);
-        if (user.isPresent()) {
-            throw new BusinessException("User not found");
-        }
-        return  this.userMapper.userToGetUserById(user.get());
+        User user = this.userBusinessRules.isUserExistById(id);
+        return  this.userMapper.userToGetUserById(user);
     }
 
     @Override
@@ -72,6 +68,32 @@ public class UserManager implements UserService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByEmail(username)
                 .orElseThrow(() -> new BusinessException(AuthMessages.LOGIN_FAILED));
+    }
+
+    @Override
+    public boolean isUserAnOrganizationByUserId(UUID userId) {
+        GetUserByIdResponse response = findUserById(userId);
+
+        User user = this.userMapper.getUserByIdToUser(response);
+
+        UUID roleId = this.userRoleService.getRoleByUser(user);
+
+        Role role = this.roleService.getRoleById(roleId);
+
+        return this.userBusinessRules.checkIsRoleOrganization(role);
+    }
+
+    @Override
+    public boolean isUserAnAdminByUserId(UUID userId) {
+        GetUserByIdResponse response = findUserById(userId);
+
+        User user = this.userMapper.getUserByIdToUser(response);
+
+        UUID roleId = this.userRoleService.getRoleByUser(user);
+
+        Role role = this.roleService.getRoleById(roleId);
+
+        return this.userBusinessRules.checkIsRoleAdmin(role);
     }
 
 }

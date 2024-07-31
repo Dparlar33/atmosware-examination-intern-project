@@ -24,27 +24,6 @@ public class RoleManager implements RoleService {
     private RoleRepository roleRepository;
     private RoleBusinessRules roleBusinessRules;
     private RoleMapper roleMapper;
-    private UserMapper userMapper;
-    private UserService userService;
-
-    @Override
-    public boolean isUserAnOrganizationByUserId(UUID userId) {
-
-        GetUserByIdResponse response = this.userService.findUserById(userId);
-
-        User user = this.userMapper.getUserByIdToUser(response);
-
-        return this.roleBusinessRules.checkIsRoleOrganization(user);
-    }
-
-    @Override
-    public boolean isUserAnAdminByUserId(UUID userId) {
-        GetUserByIdResponse response = this.userService.findUserById(userId);
-
-        User user = this.userMapper.getUserByIdToUser(response);
-
-        return this.roleBusinessRules.checkIsRoleAdmin(user);
-    }
 
     @Override
     public Role getRoleById(UUID id) {

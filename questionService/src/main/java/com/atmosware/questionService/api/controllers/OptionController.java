@@ -19,7 +19,7 @@ public class OptionController {
     private final OptionService optionService;
 
     @PostMapping("/add")
-    public void addOption  (@RequestBody CreateOptionRequest createOptionRequest) {
+    public void addOption  (@RequestBody CreateOptionRequest createOptionRequest) throws Exception {
         this.optionService.addOption(createOptionRequest);
     }
 

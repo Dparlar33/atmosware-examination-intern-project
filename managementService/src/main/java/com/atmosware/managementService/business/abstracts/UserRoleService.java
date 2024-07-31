@@ -8,7 +8,5 @@ import java.util.UUID;
 
 public interface UserRoleService {
     void addUserRole(User user , Role role);
-    void getUserRolesByUserId(UUID userId);
     UUID getRoleByUser(User user);
-    void updateUserRole(UUID id ,UUID userId, UUID roleId);
 }

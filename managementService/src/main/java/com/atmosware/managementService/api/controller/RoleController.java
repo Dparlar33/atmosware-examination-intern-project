@@ -21,14 +21,4 @@ public class RoleController {
     public List<GetAllRolesResponse> getAll() {
         return this.roleService.getAllRoles();
     }
-
-    @GetMapping("/organization/{userId}")
-    public boolean isUserAnOrganizationByUserId(@PathVariable UUID userId){
-        return this.roleService.isUserAnOrganizationByUserId(userId);
-    }
-
-    @GetMapping("/admin/{userId}")
-    public boolean isUserAnAdminByUserId(@PathVariable UUID userId){
-        return this.roleService.isUserAnAdminByUserId(userId);
-    }
 }

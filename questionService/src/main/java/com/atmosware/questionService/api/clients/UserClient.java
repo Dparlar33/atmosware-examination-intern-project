@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.UUID;
 
-@FeignClient(name = "managementService", url = "http://localhost:10044/management-service/api/v1/users/getById/")
+@FeignClient(name = "managementService", url = "http://localhost:10044/management-service/api/v1/users/")
 public interface UserClient {
     @GetMapping("/organization/{userId}")
     boolean isUserAnOrganizationByUserId(@PathVariable UUID userId);
