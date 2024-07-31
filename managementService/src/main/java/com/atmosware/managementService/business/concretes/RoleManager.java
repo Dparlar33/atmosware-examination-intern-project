@@ -1,11 +1,16 @@
 package com.atmosware.managementService.business.concretes;
 
 import com.atmosware.managementService.business.abstracts.RoleService;
+import com.atmosware.managementService.business.abstracts.UserRoleService;
+import com.atmosware.managementService.business.abstracts.UserService;
 import com.atmosware.managementService.business.dtos.responses.role.GetAllRolesResponse;
+import com.atmosware.managementService.business.dtos.responses.user.GetUserByIdResponse;
 import com.atmosware.managementService.business.rules.RoleBusinessRules;
 import com.atmosware.managementService.core.utilities.mapping.RoleMapper;
+import com.atmosware.managementService.core.utilities.mapping.UserMapper;
 import com.atmosware.managementService.dataAccess.RoleRepository;
 import com.atmosware.managementService.entities.Role;
+import com.atmosware.managementService.entities.User;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +24,27 @@ public class RoleManager implements RoleService {
     private RoleRepository roleRepository;
     private RoleBusinessRules roleBusinessRules;
     private RoleMapper roleMapper;
+    private UserMapper userMapper;
+    private UserService userService;
+
+    @Override
+    public boolean isUserAnOrganizationByUserId(UUID userId) {
+
+        GetUserByIdResponse response = this.userService.findUserById(userId);
+
+        User user = this.userMapper.getUserByIdToUser(response);
+
+        return this.roleBusinessRules.checkIsRoleOrganization(user);
+    }
+
+    @Override
+    public boolean isUserAnAdminByUserId(UUID userId) {
+        GetUserByIdResponse response = this.userService.findUserById(userId);
+
+        User user = this.userMapper.getUserByIdToUser(response);
+
+        return this.roleBusinessRules.checkIsRoleAdmin(user);
+    }
 
     @Override
     public Role getRoleById(UUID id) {

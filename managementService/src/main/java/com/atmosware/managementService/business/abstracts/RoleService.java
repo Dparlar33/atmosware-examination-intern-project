@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.UUID;
 
 public interface RoleService {
+    boolean isUserAnOrganizationByUserId(UUID userId);
+    boolean isUserAnAdminByUserId(UUID userId);
     Role getRoleById(UUID id);
     List<GetAllRolesResponse> getAllRoles();
 }

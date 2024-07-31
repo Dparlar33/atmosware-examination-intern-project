@@ -30,8 +30,9 @@ public class UserRoleManager implements UserRoleService {
     }
 
     @Override
-    public void getRoleByUserId(UUID userId) {
-
+    public UUID getRoleByUser(User user) {
+        UserRole userRole = this.userRoleRepository.findUserRoleByUser(user);
+        return userRole.getRole().getId();
     }
 
     @Override

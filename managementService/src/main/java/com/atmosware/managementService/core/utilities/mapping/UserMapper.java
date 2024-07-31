@@ -14,4 +14,6 @@ public interface UserMapper {
     User updateUserRequestToUser(UpdateUserRequest updateUserRequest);
 
     GetUserByIdResponse userToGetUserById(User user);
+
+    User getUserByIdToUser(GetUserByIdResponse getUserByIdResponse);
 }

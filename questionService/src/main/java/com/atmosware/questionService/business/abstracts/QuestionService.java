@@ -1,6 +1,7 @@
 package com.atmosware.questionService.business.abstracts;
 
 import com.atmosware.questionService.business.dtos.requests.question.CreateQuestionRequest;
+import com.atmosware.questionService.business.dtos.requests.question.DeleteQuestionRequest;
 import com.atmosware.questionService.business.dtos.requests.question.UpdateQuestionRequest;
 import com.atmosware.questionService.business.dtos.responses.question.GetAllQuestionsResponse;
 import com.atmosware.questionService.business.dtos.responses.question.GetQuestionByIdResponse;
@@ -13,5 +14,5 @@ public interface QuestionService {
     List<GetAllQuestionsResponse> getAllQuestions();
     GetQuestionByIdResponse getQuestionById(UUID id) throws Exception;
     void updateQuestion(UpdateQuestionRequest updateQuestionRequest);
-    void deleteQuestion(UUID id);
+    void deleteQuestion(DeleteQuestionRequest deleteQuestionRequest);
 }

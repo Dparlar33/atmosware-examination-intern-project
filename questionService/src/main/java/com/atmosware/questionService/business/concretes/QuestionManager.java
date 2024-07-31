@@ -3,6 +3,7 @@ package com.atmosware.questionService.business.concretes;
 import com.atmosware.questionService.business.abstracts.OptionService;
 import com.atmosware.questionService.business.abstracts.QuestionService;
 import com.atmosware.questionService.business.dtos.requests.question.CreateQuestionRequest;
+import com.atmosware.questionService.business.dtos.requests.question.DeleteQuestionRequest;
 import com.atmosware.questionService.business.dtos.requests.question.UpdateQuestionRequest;
 import com.atmosware.questionService.business.dtos.responses.question.GetAllQuestionsResponse;
 import com.atmosware.questionService.business.dtos.responses.question.GetQuestionByIdResponse;
@@ -45,13 +46,30 @@ public class QuestionManager implements QuestionService {
 
     @Override
     public void updateQuestion(UpdateQuestionRequest updateQuestionRequest) {
+
+        this.questionBusinessRules.isQuestionExistById(updateQuestionRequest.getId());
+
+        Question question =
+                this.questionRepository.findById(updateQuestionRequest.getId()).orElse(null);
+
+        assert question != null;
+        this.questionBusinessRules.checkOwnerOfTheQuestion(question,updateQuestionRequest.getUserId());
+
         Question updatedQuestion = this.questionMapper.updateQuestionRequestToQuestion(updateQuestionRequest);
         questionRepository.save(updatedQuestion);
     }
 
     @Override
-    public void deleteQuestion(UUID id) {
-        this.optionService.deleteOption(id);
-        this.questionRepository.deleteById(id);
+    public void deleteQuestion(DeleteQuestionRequest deleteQuestionRequest) {
+        this.questionBusinessRules.isQuestionExistById(deleteQuestionRequest.getId());
+
+        Question question =
+                this.questionRepository.findById(deleteQuestionRequest.getId()).orElse(null);
+
+        assert question != null;
+        this.questionBusinessRules.checkOwnerOfTheQuestion(question,deleteQuestionRequest.getUserId());
+
+        this.optionService.deleteOption(deleteQuestionRequest.getId());
+        this.questionRepository.deleteById(deleteQuestionRequest.getId());
     }
 }

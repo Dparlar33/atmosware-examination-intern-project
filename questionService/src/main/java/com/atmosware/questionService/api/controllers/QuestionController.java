@@ -3,6 +3,7 @@ package com.atmosware.questionService.api.controllers;
 
 import com.atmosware.questionService.business.abstracts.QuestionService;
 import com.atmosware.questionService.business.dtos.requests.question.CreateQuestionRequest;
+import com.atmosware.questionService.business.dtos.requests.question.DeleteQuestionRequest;
 import com.atmosware.questionService.business.dtos.requests.question.UpdateQuestionRequest;
 import com.atmosware.questionService.business.dtos.responses.question.GetAllQuestionsResponse;
 import com.atmosware.questionService.business.dtos.responses.question.GetQuestionByIdResponse;
@@ -37,5 +38,10 @@ public class QuestionController {
     @GetMapping("/getById/{id}")
     public GetQuestionByIdResponse getAllQuestions(@PathVariable UUID id) throws Exception {
         return this.questionService.getQuestionById(id);
+    }
+
+    @DeleteMapping("/delete")
+    public void deleteQuestion(@RequestBody DeleteQuestionRequest deleteQuestionRequest) {
+        this.questionService.deleteQuestion(deleteQuestionRequest);
     }
 }
