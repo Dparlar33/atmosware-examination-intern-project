@@ -32,13 +32,10 @@ public class OptionManager implements OptionService {
     public void addOption(CreateOptionRequest createOptionRequest) throws Exception {
 
         GetQuestionByIdResponse question = this.questionService.getQuestionById(createOptionRequest.getQuestionId());
-        this.optionBusinessRules.isOptionCountLowerThanFive(question);
+        this.optionBusinessRules.isOptionCountLowerThanRequestedOption(question);
 
         Option mappedOption = this.optionMapper.createOptionRequestToOption(createOptionRequest);
         this.optionRepository.save(mappedOption);
-
-        question.setOptionCount(question.getOptionCount() + 1);
-        //this.questionService.updateQuestion(this.questionMapper.questionToUpdateQuestionRequest(question));
     }
 
     @Override

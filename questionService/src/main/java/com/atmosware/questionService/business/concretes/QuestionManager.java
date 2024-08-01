@@ -10,7 +10,6 @@ import com.atmosware.questionService.business.rules.QuestionBusinessRules;
 import com.atmosware.questionService.core.utilities.mapping.QuestionMapper;
 import com.atmosware.questionService.dataAccess.QuestionRepository;
 import com.atmosware.questionService.entities.Question;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
