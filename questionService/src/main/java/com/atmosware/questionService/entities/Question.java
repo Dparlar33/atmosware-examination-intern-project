@@ -20,7 +20,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "questions")
 public class Question extends BaseEntity {
-    private UUID userId;
+    private String userRole;
     private String description;
     private int optionCount;
     private String imageUrl;

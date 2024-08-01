@@ -4,7 +4,7 @@ import com.atmosware.managementService.business.dtos.responses.role.GetAllRolesR
 import com.atmosware.managementService.entities.Role;
 import org.mapstruct.Mapper;
 
-@Mapper(config = MapStructureService.class)
+@Mapper(componentModel = "spring")
 public interface RoleMapper {
     GetAllRolesResponse roleToGetAllRolesResponse(Role role);
 }

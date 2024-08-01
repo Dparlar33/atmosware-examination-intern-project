@@ -3,10 +3,10 @@ package com.atmosware.questionService.api.controllers;
 
 import com.atmosware.questionService.business.abstracts.QuestionService;
 import com.atmosware.questionService.business.dtos.requests.question.CreateQuestionRequest;
-import com.atmosware.questionService.business.dtos.requests.question.DeleteQuestionRequest;
 import com.atmosware.questionService.business.dtos.requests.question.UpdateQuestionRequest;
 import com.atmosware.questionService.business.dtos.responses.question.GetAllQuestionsResponse;
 import com.atmosware.questionService.business.dtos.responses.question.GetQuestionByIdResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,13 +21,13 @@ public class QuestionController {
     private final QuestionService questionService;
 
     @PostMapping("/add")
-    public void addQuestion(@RequestBody CreateQuestionRequest createQuestionRequest) {
-        this.questionService.addQuestion(createQuestionRequest);
+    public void addQuestion(@RequestBody CreateQuestionRequest createQuestionRequest, HttpServletRequest httpServletRequest) {
+        this.questionService.addQuestion(createQuestionRequest, httpServletRequest);
     }
 
     @PutMapping("/update")
-    public void updateQuestion(@RequestBody UpdateQuestionRequest updateQuestionRequest) {
-        this.questionService.updateQuestion(updateQuestionRequest);
+    public void updateQuestion(@RequestBody UpdateQuestionRequest updateQuestionRequest, HttpServletRequest httpServletRequest) {
+        this.questionService.updateQuestion(updateQuestionRequest, httpServletRequest);
     }
 
     @GetMapping("/getAllQuestions")
@@ -40,8 +40,8 @@ public class QuestionController {
         return this.questionService.getQuestionById(id);
     }
 
-    @DeleteMapping("/delete")
-    public void deleteQuestion(@RequestBody DeleteQuestionRequest deleteQuestionRequest) {
-        this.questionService.deleteQuestion(deleteQuestionRequest);
+    @DeleteMapping("/delete/{id}")
+    public void deleteQuestion(@PathVariable UUID id, HttpServletRequest httpServletRequest) {
+        this.questionService.deleteQuestion(id, httpServletRequest);
     }
 }

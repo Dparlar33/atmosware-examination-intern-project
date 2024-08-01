@@ -20,9 +20,6 @@ public class UpdateQuestionRequest {
     @NotNull(message = ValidationMessage.THIS_FIELD_IS_REQUIRED)
     private UUID id;
 
-    @NotNull(message = ValidationMessage.THIS_FIELD_IS_REQUIRED)
-    private UUID userId;
-
     @NotNull
     @Size(max = 2000)
     private String description;

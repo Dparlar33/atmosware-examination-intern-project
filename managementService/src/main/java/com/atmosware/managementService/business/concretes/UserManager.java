@@ -19,7 +19,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -68,32 +67,6 @@ public class UserManager implements UserService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByEmail(username)
                 .orElseThrow(() -> new BusinessException(AuthMessages.LOGIN_FAILED));
-    }
-
-    @Override
-    public boolean isUserAnOrganizationByUserId(UUID userId) {
-        GetUserByIdResponse response = findUserById(userId);
-
-        User user = this.userMapper.getUserByIdToUser(response);
-
-        UUID roleId = this.userRoleService.getRoleByUser(user);
-
-        Role role = this.roleService.getRoleById(roleId);
-
-        return this.userBusinessRules.checkIsRoleOrganization(role);
-    }
-
-    @Override
-    public boolean isUserAnAdminByUserId(UUID userId) {
-        GetUserByIdResponse response = findUserById(userId);
-
-        User user = this.userMapper.getUserByIdToUser(response);
-
-        UUID roleId = this.userRoleService.getRoleByUser(user);
-
-        Role role = this.roleService.getRoleById(roleId);
-
-        return this.userBusinessRules.checkIsRoleAdmin(role);
     }
 
 }

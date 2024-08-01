@@ -1,9 +1,8 @@
 package com.atmosware.questionService.business.concretes;
 
-import com.atmosware.questionService.business.abstracts.OptionService;
+import com.atmosware.core.services.JwtService;
 import com.atmosware.questionService.business.abstracts.QuestionService;
 import com.atmosware.questionService.business.dtos.requests.question.CreateQuestionRequest;
-import com.atmosware.questionService.business.dtos.requests.question.DeleteQuestionRequest;
 import com.atmosware.questionService.business.dtos.requests.question.UpdateQuestionRequest;
 import com.atmosware.questionService.business.dtos.responses.question.GetAllQuestionsResponse;
 import com.atmosware.questionService.business.dtos.responses.question.GetQuestionByIdResponse;
@@ -11,8 +10,11 @@ import com.atmosware.questionService.business.rules.QuestionBusinessRules;
 import com.atmosware.questionService.core.utilities.mapping.QuestionMapper;
 import com.atmosware.questionService.dataAccess.QuestionRepository;
 import com.atmosware.questionService.entities.Question;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.UUID;
@@ -22,14 +24,27 @@ import java.util.UUID;
 public class QuestionManager implements QuestionService {
 
     private QuestionRepository questionRepository;
-    private OptionService optionService;
     private QuestionBusinessRules questionBusinessRules;
     private QuestionMapper questionMapper;
+    private JwtService jwtService;
 
     @Override
-    public void addQuestion(CreateQuestionRequest createQuestionRequest) {
+    public void addQuestion(CreateQuestionRequest createQuestionRequest, HttpServletRequest httpServletRequest) {
+
+        String token = extractJwtFromRequest(httpServletRequest);
+        List<String> roleName = this.jwtService.extractRoles(token);
+
         Question mappedQuestion = this.questionMapper.createQuestionRequestToQuestion(createQuestionRequest);
-        questionRepository.save(mappedQuestion);
+        mappedQuestion.setUserRole(roleName.get(0));
+        this.questionRepository.save(mappedQuestion);
+    }
+
+    public String extractJwtFromRequest(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7);
+        }
+        return null;
     }
 
     @Override
@@ -41,35 +56,40 @@ public class QuestionManager implements QuestionService {
     @Override
     public GetQuestionByIdResponse getQuestionById(UUID id) {
 
-      return this.questionMapper.questionToGetQuestionByIdResponse(this.questionBusinessRules.isQuestionExistById(id));
+        return this.questionMapper.questionToGetQuestionByIdResponse(this.questionBusinessRules.isQuestionExistById(id));
     }
 
     @Override
-    public void updateQuestion(UpdateQuestionRequest updateQuestionRequest) {
+    public void updateQuestion(UpdateQuestionRequest updateQuestionRequest, HttpServletRequest httpServletRequest) {
 
         this.questionBusinessRules.isQuestionExistById(updateQuestionRequest.getId());
 
         Question question =
                 this.questionRepository.findById(updateQuestionRequest.getId()).orElse(null);
 
+        String token = extractJwtFromRequest(httpServletRequest);
+        List<String> roleName = this.jwtService.extractRoles(token);
+
         assert question != null;
-        this.questionBusinessRules.checkOwnerOfTheQuestion(question,updateQuestionRequest.getUserId());
+        this.questionBusinessRules.checkRequestRole(roleName.get(0),question.getUserRole());
 
         Question updatedQuestion = this.questionMapper.updateQuestionRequestToQuestion(updateQuestionRequest);
         questionRepository.save(updatedQuestion);
     }
 
     @Override
-    public void deleteQuestion(DeleteQuestionRequest deleteQuestionRequest) {
-        this.questionBusinessRules.isQuestionExistById(deleteQuestionRequest.getId());
+    public void deleteQuestion(UUID id, HttpServletRequest httpServletRequest) {
+        this.questionBusinessRules.isQuestionExistById(id);
 
         Question question =
-                this.questionRepository.findById(deleteQuestionRequest.getId()).orElse(null);
+                this.questionRepository.findById(id).orElse(null);
+
+        String token = extractJwtFromRequest(httpServletRequest);
+        List<String> roleName = this.jwtService.extractRoles(token);
 
         assert question != null;
-        this.questionBusinessRules.checkOwnerOfTheQuestion(question,deleteQuestionRequest.getUserId());
+        this.questionBusinessRules.checkRequestRole(roleName.get(0),question.getUserRole());
 
-        this.optionService.deleteOption(deleteQuestionRequest.getId());
-        this.questionRepository.deleteById(deleteQuestionRequest.getId());
+        this.questionRepository.deleteById(id);
     }
 }

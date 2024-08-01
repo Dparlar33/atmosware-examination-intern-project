@@ -6,7 +6,7 @@ import com.atmosware.managementService.business.dtos.responses.user.GetUserByIdR
 import com.atmosware.managementService.entities.User;
 import org.mapstruct.Mapper;
 
-@Mapper(config = MapStructureService.class)
+@Mapper(componentModel = "spring")
 public interface UserMapper {
 
     User registerRequestToUser(RegisterRequest registerRequest);

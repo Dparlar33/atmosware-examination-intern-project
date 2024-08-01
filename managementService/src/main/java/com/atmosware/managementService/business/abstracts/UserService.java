@@ -11,6 +11,4 @@ public interface UserService extends UserDetailsService {
     void register(RegisterRequest request);
     GetUserByIdResponse findUserById(UUID id);
     void updateUser(UpdateUserRequest updateUserRequest);
-    boolean isUserAnOrganizationByUserId(UUID userId);
-    boolean isUserAnAdminByUserId(UUID userId);
 }

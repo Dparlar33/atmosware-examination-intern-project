@@ -1,7 +1,7 @@
 package com.atmosware.managementService.business.concretes;
 
 
-import com.atmosware.core.utils.JwtService;
+import com.atmosware.core.services.JwtService;
 import com.atmosware.managementService.business.abstracts.AuthService;
 import com.atmosware.managementService.business.dtos.requests.user.LoginRequest;
 import com.atmosware.managementService.business.messages.AuthMessages;
@@ -12,11 +12,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -39,6 +42,12 @@ public class AuthManager implements AuthService {
         Map<String, Object> claims = new HashMap<>();
         claims.put("id", user.getId());
         claims.put("username", user.getEmail());
-        return jwtService.generateToken(user.getEmail(), claims);
+
+        List<String> roles = user.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
+        claims.put("roles", roles);
+
+        return this.jwtService.generateToken(user.getEmail(),claims);
     }
 }

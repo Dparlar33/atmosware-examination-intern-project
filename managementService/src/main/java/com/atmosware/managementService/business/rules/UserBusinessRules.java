@@ -39,12 +39,4 @@ public class UserBusinessRules {
         return user.get();
     }
 
-    public boolean checkIsRoleOrganization(Role role) {
-        return role.getId().equals(UUID.fromString("fc2f7c0e-5dc8-41c8-bb83-e9bde91aed56"));
-    }
-
-    public boolean checkIsRoleAdmin(Role role) {
-        return role.getId().equals(UUID.fromString("47634fc5-ea21-4319-acfc-856c5bad8abf"));
-    }
-
 }

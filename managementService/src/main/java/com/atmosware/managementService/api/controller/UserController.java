@@ -30,13 +30,4 @@ public class UserController {
         return this.userService.findUserById(id);
     }
 
-    @GetMapping("/organization/{userId}")
-    public boolean isUserAnOrganizationByUserId(@PathVariable UUID userId){
-        return this.userService.isUserAnOrganizationByUserId(userId);
-    }
-
-    @GetMapping("/admin/{userId}")
-    public boolean isUserAnAdminByUserId(@PathVariable UUID userId){
-        return this.userService.isUserAnAdminByUserId(userId);
-    }
 }

@@ -38,7 +38,7 @@ public class OptionManager implements OptionService {
         this.optionRepository.save(mappedOption);
 
         question.setOptionCount(question.getOptionCount() + 1);
-        this.questionService.updateQuestion(this.questionMapper.questionToUpdateQuestionRequest(question));
+        //this.questionService.updateQuestion(this.questionMapper.questionToUpdateQuestionRequest(question));
     }
 
     @Override
