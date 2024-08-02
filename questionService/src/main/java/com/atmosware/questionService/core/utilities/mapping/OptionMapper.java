@@ -4,6 +4,7 @@ import com.atmosware.questionService.business.dtos.requests.option.CreateOptionR
 import com.atmosware.questionService.business.dtos.requests.option.UpdateOptionRequest;
 import com.atmosware.questionService.business.dtos.responses.option.GetAllOptionsResponse;
 import com.atmosware.questionService.business.dtos.responses.option.GetOptionByIdResponse;
+import com.atmosware.questionService.business.dtos.responses.option.OptionResponse;
 import com.atmosware.questionService.entities.Option;
 import org.mapstruct.Mapper;
 
@@ -13,4 +14,5 @@ public interface OptionMapper {
     Option updateOptionRequestToOption(UpdateOptionRequest updateOptionRequest);
     GetAllOptionsResponse optionToGetAllOptionResponse(Option option);
     GetOptionByIdResponse optionToGetOptionByIdResponse(Option option);
+    OptionResponse optionToOptionResponse(Option option);
 }

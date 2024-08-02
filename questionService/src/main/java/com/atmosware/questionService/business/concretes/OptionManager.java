@@ -6,10 +6,10 @@ import com.atmosware.questionService.business.dtos.requests.option.CreateOptionR
 import com.atmosware.questionService.business.dtos.requests.option.UpdateOptionRequest;
 import com.atmosware.questionService.business.dtos.responses.option.GetAllOptionsResponse;
 import com.atmosware.questionService.business.dtos.responses.option.GetOptionByIdResponse;
+import com.atmosware.questionService.business.dtos.responses.option.OptionResponse;
 import com.atmosware.questionService.business.dtos.responses.question.GetQuestionByIdResponse;
 import com.atmosware.questionService.business.rules.OptionBusinessRules;
 import com.atmosware.questionService.core.utilities.mapping.OptionMapper;
-import com.atmosware.questionService.core.utilities.mapping.QuestionMapper;
 import com.atmosware.questionService.dataAccess.OptionRepository;
 import com.atmosware.questionService.entities.Option;
 import lombok.AllArgsConstructor;
@@ -26,10 +26,10 @@ public class OptionManager implements OptionService {
     private OptionMapper optionMapper;
     private OptionBusinessRules optionBusinessRules;
     private QuestionService questionService;
-    private QuestionMapper questionMapper;
 
     @Override
     public void addOption(CreateOptionRequest createOptionRequest) throws Exception {
+        this.optionBusinessRules.imageAndDescriptionShouldNotBeNullInTheOneOption(createOptionRequest);
 
         GetQuestionByIdResponse question = this.questionService.getQuestionById(createOptionRequest.getQuestionId());
         this.optionBusinessRules.isOptionCountLowerThanRequestedOption(question);
@@ -42,6 +42,12 @@ public class OptionManager implements OptionService {
     public List<GetAllOptionsResponse> getAllOptions() {
         List<Option> options = this.optionRepository.findAll();
         return options.stream().map(this.optionMapper::optionToGetAllOptionResponse).toList();
+    }
+
+    @Override
+    public List<OptionResponse> getOptionsByQuestionId(UUID questionId){
+        List<Option> options = this.optionRepository.findOptionsByQuestionId(questionId);
+        return options.stream().map(this.optionMapper::optionToOptionResponse).toList();
     }
 
     @Override

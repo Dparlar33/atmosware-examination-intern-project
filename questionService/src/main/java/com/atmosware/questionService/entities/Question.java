@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -24,7 +23,7 @@ public class Question extends BaseEntity {
     private String description;
     private int optionCount;
     private String imageUrl;
-
+    private Status status;
 
     @OneToMany(mappedBy = "question")
     private List<Option> options;

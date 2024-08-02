@@ -21,7 +21,6 @@ public class UpdateOptionRequest {
     @NotNull(message = ValidationMessage.THIS_FIELD_IS_REQUIRED)
     private UUID questionId;
 
-    @NotNull(message = ValidationMessage.THIS_FIELD_IS_REQUIRED)
     @Size(max = 500)
     private String description;
 

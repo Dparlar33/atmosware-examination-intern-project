@@ -19,13 +19,11 @@ public class CreateOptionRequest {
     @NotNull(message = ValidationMessage.THIS_FIELD_IS_REQUIRED)
     private UUID questionId;
 
-    @NotNull(message = ValidationMessage.THIS_FIELD_IS_REQUIRED)
     @Size(max = 500)
     private String description;
 
     @NotNull(message = ValidationMessage.THIS_FIELD_IS_REQUIRED)
     private boolean isCorrect;
-
 
     private String imageUrl;
 }

@@ -4,6 +4,7 @@ import com.atmosware.questionService.business.dtos.requests.option.CreateOptionR
 import com.atmosware.questionService.business.dtos.requests.option.UpdateOptionRequest;
 import com.atmosware.questionService.business.dtos.responses.option.GetAllOptionsResponse;
 import com.atmosware.questionService.business.dtos.responses.option.GetOptionByIdResponse;
+import com.atmosware.questionService.business.dtos.responses.option.OptionResponse;
 
 import java.util.List;
 import java.util.UUID;
@@ -14,4 +15,5 @@ public interface OptionService {
     GetOptionByIdResponse getOptionById(UUID optionId) throws Exception;
     void updateOption(UpdateOptionRequest updateOptionRequest);
     void deleteOption(UUID optionId);
+    List<OptionResponse> getOptionsByQuestionId(UUID questionId);
 }

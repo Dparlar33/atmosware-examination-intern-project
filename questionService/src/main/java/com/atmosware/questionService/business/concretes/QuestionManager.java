@@ -1,15 +1,19 @@
 package com.atmosware.questionService.business.concretes;
 
 import com.atmosware.core.services.JwtService;
+import com.atmosware.questionService.business.abstracts.OptionService;
 import com.atmosware.questionService.business.abstracts.QuestionService;
 import com.atmosware.questionService.business.dtos.requests.question.CreateQuestionRequest;
 import com.atmosware.questionService.business.dtos.requests.question.UpdateQuestionRequest;
+import com.atmosware.questionService.business.dtos.responses.option.OptionResponse;
 import com.atmosware.questionService.business.dtos.responses.question.GetAllQuestionsResponse;
+import com.atmosware.questionService.business.dtos.responses.question.GetQuestionAndOptionResponse;
 import com.atmosware.questionService.business.dtos.responses.question.GetQuestionByIdResponse;
 import com.atmosware.questionService.business.rules.QuestionBusinessRules;
 import com.atmosware.questionService.core.utilities.mapping.QuestionMapper;
 import com.atmosware.questionService.dataAccess.QuestionRepository;
 import com.atmosware.questionService.entities.Question;
+import com.atmosware.questionService.entities.Status;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,15 +30,20 @@ public class QuestionManager implements QuestionService {
     private QuestionBusinessRules questionBusinessRules;
     private QuestionMapper questionMapper;
     private JwtService jwtService;
+    private OptionService optionService;
 
     @Override
     public void addQuestion(CreateQuestionRequest createQuestionRequest, HttpServletRequest httpServletRequest) {
+
+        this.questionBusinessRules.imageAndDescriptionShouldNotBeNullInTheOneQuestion(createQuestionRequest);
 
         String token = extractJwtFromRequest(httpServletRequest);
         List<String> roleName = this.jwtService.extractRoles(token);
 
         Question mappedQuestion = this.questionMapper.createQuestionRequestToQuestion(createQuestionRequest);
         mappedQuestion.setUserRole(roleName.get(0));
+        mappedQuestion.setStatus(Status.AVAILABLE);
+
         this.questionRepository.save(mappedQuestion);
     }
 
@@ -66,10 +75,13 @@ public class QuestionManager implements QuestionService {
         Question question =
                 this.questionRepository.findById(updateQuestionRequest.getId()).orElse(null);
 
+        assert question != null;
+        this.questionBusinessRules.isQuestionAvailable(question);
+
+
         String token = extractJwtFromRequest(httpServletRequest);
         List<String> roleName = this.jwtService.extractRoles(token);
 
-        assert question != null;
         this.questionBusinessRules.checkRequestRole(roleName.get(0),question.getUserRole());
 
         Question updatedQuestion = this.questionMapper.updateQuestionRequestToQuestion(updateQuestionRequest);
@@ -90,5 +102,26 @@ public class QuestionManager implements QuestionService {
         this.questionBusinessRules.checkRequestRole(roleName.get(0),question.getUserRole());
 
         this.questionRepository.deleteById(id);
+        this.optionService.deleteOption(id);
+    }
+
+    @Override
+    public GetQuestionAndOptionResponse getQuestionAndOptionById(UUID questionId, HttpServletRequest httpServletRequest) {
+        this.questionBusinessRules.isQuestionExistById(questionId);
+
+        Question question = this.questionRepository.findById(questionId).orElse(null);
+
+        List<OptionResponse> optionResponseList = this.optionService.getOptionsByQuestionId(questionId);
+
+        this.questionBusinessRules.atLeastOneCorrectOptionMustBe(optionResponseList);
+
+        assert question != null;
+        question.setStatus(Status.OCCUPIED);
+        this.questionRepository.save(question);
+
+        GetQuestionAndOptionResponse getQuestionAndOptionResponse = this.questionMapper.questionToGetQuestionAndOptionResponse(question);
+
+        getQuestionAndOptionResponse.setOptionResponseList(optionResponseList);
+        return getQuestionAndOptionResponse;
     }
 }

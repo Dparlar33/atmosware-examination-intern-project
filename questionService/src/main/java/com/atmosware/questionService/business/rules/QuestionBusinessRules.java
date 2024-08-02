@@ -1,13 +1,20 @@
 package com.atmosware.questionService.business.rules;
 
 
+import com.atmosware.questionService.business.dtos.requests.question.CreateQuestionRequest;
+import com.atmosware.questionService.business.dtos.requests.question.UpdateQuestionRequest;
+import com.atmosware.questionService.business.dtos.responses.option.OptionResponse;
 import com.atmosware.questionService.business.messages.QuestionMessages;
 import com.atmosware.questionService.core.utilities.exceptions.types.BusinessException;
 import com.atmosware.questionService.dataAccess.QuestionRepository;
+
 import com.atmosware.questionService.entities.Question;
+import com.atmosware.questionService.entities.Status;
 import lombok.AllArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,6 +35,27 @@ public class QuestionBusinessRules {
     public void checkRequestRole(String requestRoleName,String questionRoleName) {
         if (requestRoleName.equals("ORGANIZATION") && !questionRoleName.equals("ORGANIZATION")) {
             throw new BusinessException(QuestionMessages.INVALID_REQUEST_ROLE);
+        }
+    }
+
+    public void atLeastOneCorrectOptionMustBe(List<OptionResponse> optionResponseList){
+        for (OptionResponse optionResponse : optionResponseList) {
+            if (optionResponse.isCorrect()) {
+                break;
+            }
+        }
+        throw new BusinessException(QuestionMessages.QUESTION_HAS_TO_INCLUDE_ONE_CORRECT_OPTION);
+    }
+
+    public void imageAndDescriptionShouldNotBeNullInTheOneQuestion(CreateQuestionRequest createQuestionRequest){
+        if (createQuestionRequest.getDescription().equals(null) && createQuestionRequest.getImageUrl().equals(null)){
+            throw new BusinessException(QuestionMessages.DESCRIPTION_AND_IMAGE_URL_CANNOT_BE_NULL_AT_THE_SAME_QUESTION);
+        }
+    }
+
+    public void isQuestionAvailable(Question question){
+        if (question.getStatus().equals(Status.OCCUPIED)){
+            throw new BusinessException(QuestionMessages.THIS_QUESTION_IS_CURRENTLY_IN_USE_CANNOT_BE_UPDATED);
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.atmosware.questionService.business.dtos.requests.question;
 
 import com.atmosware.questionService.business.messages.ValidationMessage;
+import com.atmosware.questionService.entities.Status;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -16,7 +17,6 @@ import java.util.UUID;
 @Getter
 @Setter
 public class CreateQuestionRequest {
-    @NotNull
     @Size(max = 2000)
     private String description;
 
