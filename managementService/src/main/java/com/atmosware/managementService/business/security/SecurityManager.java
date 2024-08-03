@@ -23,9 +23,13 @@ public class SecurityManager implements SecurityService {
             "/v3/api-docs/**",
             "/api/v1/auth/**",
             "/management-service/api/v1/users/**",
-            "/management-service/api/v1/roles/getAll"
+            "/management-service/api/v1/roles/getAll",
+            "/management-service/api/v1/invitation/send"
     };
 
+
+    //Authorization processes will be done last.
+    // Currently, in the development environment, all requests can be made without requiring a role and JWT.
     @Override
     public HttpSecurity configureCoreSecurity(HttpSecurity httpSecurity) throws Exception {
         httpSecurity

@@ -1,13 +1,11 @@
 package com.atmosware.questionService.business.concretes;
 
 import com.atmosware.questionService.business.abstracts.OptionService;
-import com.atmosware.questionService.business.abstracts.QuestionService;
 import com.atmosware.questionService.business.dtos.requests.option.CreateOptionRequest;
 import com.atmosware.questionService.business.dtos.requests.option.UpdateOptionRequest;
 import com.atmosware.questionService.business.dtos.responses.option.GetAllOptionsResponse;
 import com.atmosware.questionService.business.dtos.responses.option.GetOptionByIdResponse;
 import com.atmosware.questionService.business.dtos.responses.option.OptionResponse;
-import com.atmosware.questionService.business.dtos.responses.question.GetQuestionByIdResponse;
 import com.atmosware.questionService.business.rules.OptionBusinessRules;
 import com.atmosware.questionService.core.utilities.mapping.OptionMapper;
 import com.atmosware.questionService.dataAccess.OptionRepository;
@@ -25,14 +23,11 @@ public class OptionManager implements OptionService {
     private OptionRepository optionRepository;
     private OptionMapper optionMapper;
     private OptionBusinessRules optionBusinessRules;
-    private QuestionService questionService;
+
 
     @Override
     public void addOption(CreateOptionRequest createOptionRequest) throws Exception {
         this.optionBusinessRules.imageAndDescriptionShouldNotBeNullInTheOneOption(createOptionRequest);
-
-        GetQuestionByIdResponse question = this.questionService.getQuestionById(createOptionRequest.getQuestionId());
-        this.optionBusinessRules.isOptionCountLowerThanRequestedOption(question);
 
         Option mappedOption = this.optionMapper.createOptionRequestToOption(createOptionRequest);
         this.optionRepository.save(mappedOption);

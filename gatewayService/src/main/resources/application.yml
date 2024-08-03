@@ -28,3 +28,7 @@ spring:
           id: managementService
           predicates[0]: Path=/management-service/api/v1/**
           uri: lb://MANAGEMENTSERVICE
+        routes[3]:
+          id: invitationService
+          predicates[0]: Path=/invitation-service/api/v1/**
+          uri: lb://INVITATIONSERVICE
