@@ -17,7 +17,7 @@ This project is a general talent exam simulation web application developed using
 
 
 
-#  Project Requirements
+#  About Project
 
 #### User Story: **Organizasyonların kendi sorularını kaydedebileceği, testlerini oluşturabileceği ve bu teste adaylarını davet edebileceği bir Genel Yetenek Testi yapısının oluşturulması beklenmektedir**.
 
