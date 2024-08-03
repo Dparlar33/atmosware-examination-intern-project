@@ -114,6 +114,7 @@ public class QuestionManager implements QuestionService {
         List<OptionResponse> optionResponseList = this.optionService.getOptionsByQuestionId(questionId);
 
         this.questionBusinessRules.atLeastOneCorrectOptionMustBe(optionResponseList);
+        this.questionBusinessRules.checkOptionCountIsLowerThanFiveAngHigherThanTwo(optionResponseList);
 
         assert question != null;
         question.setStatus(Status.OCCUPIED);
