@@ -38,10 +38,10 @@ public class QuestionManager implements QuestionService {
         this.questionBusinessRules.imageAndDescriptionShouldNotBeNullInTheOneQuestion(createQuestionRequest);
 
         String token = extractJwtFromRequest(httpServletRequest);
-        List<String> roleName = this.jwtService.extractRoles(token);
+        String roleName = this.jwtService.extractRoles(token);
 
         Question mappedQuestion = this.questionMapper.createQuestionRequestToQuestion(createQuestionRequest);
-        mappedQuestion.setUserRole(roleName.get(0));
+        mappedQuestion.setUserRole(roleName);
         mappedQuestion.setStatus(Status.AVAILABLE);
 
         this.questionRepository.save(mappedQuestion);
@@ -80,9 +80,9 @@ public class QuestionManager implements QuestionService {
 
 
         String token = extractJwtFromRequest(httpServletRequest);
-        List<String> roleName = this.jwtService.extractRoles(token);
+        String roleName = this.jwtService.extractRoles(token);
 
-        this.questionBusinessRules.checkRequestRole(roleName.get(0),question.getUserRole());
+        this.questionBusinessRules.checkRequestRole(roleName,question.getUserRole());
 
         Question updatedQuestion = this.questionMapper.updateQuestionRequestToQuestion(updateQuestionRequest);
         questionRepository.save(updatedQuestion);
@@ -96,10 +96,10 @@ public class QuestionManager implements QuestionService {
                 this.questionRepository.findById(id).orElse(null);
 
         String token = extractJwtFromRequest(httpServletRequest);
-        List<String> roleName = this.jwtService.extractRoles(token);
+        String roleName = this.jwtService.extractRoles(token);
 
         assert question != null;
-        this.questionBusinessRules.checkRequestRole(roleName.get(0),question.getUserRole());
+        this.questionBusinessRules.checkRequestRole(roleName,question.getUserRole());
 
         this.questionRepository.deleteById(id);
         this.optionService.deleteOption(id);

@@ -48,8 +48,8 @@ public class JwtService
                 .parseClaimsJws(token)
                 .getBody();
     }
-    public List<String> extractRoles(String token) {
-        return getClaims(token).get("roles", List.class);
+    public String extractRoles(String token) {
+        return getClaims(token).get("role", String.class);
     }
     public String extractUser(String token) {
         Claims claims = Jwts

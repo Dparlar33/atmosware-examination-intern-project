@@ -26,9 +26,18 @@ public class RoleManager implements RoleService {
     private RoleMapper roleMapper;
 
     @Override
-    public Role getRoleById(UUID id) {
+    public String getRoleNameById(UUID id) {
+        this.roleBusinessRules.isRoleExistById(id);
+        Role role = this.roleRepository.findById(id).orElse(null);
+        assert role != null;
+        return role.getName();
+    }
+
+    @Override
+    public Role getRoleById(UUID id){
         return this.roleBusinessRules.isRoleExistById(id);
     }
+
 
     @Override
     public List<GetAllRolesResponse> getAllRoles() {

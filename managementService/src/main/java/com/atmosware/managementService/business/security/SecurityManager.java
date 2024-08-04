@@ -23,7 +23,6 @@ public class SecurityManager implements SecurityService {
             "/v3/api-docs/**",
             "/api/v1/auth/**",
             "/management-service/api/v1/users/**",
-            "/management-service/api/v1/roles/getAll",
             "/management-service/api/v1/invitation/send"
     };
 
