@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -20,6 +21,7 @@ import java.util.List;
 @Table(name = "questions")
 public class Question extends BaseEntity {
     private String userRole;
+    private UUID userId;
     private String description;
     private int optionCount;
     private String imageUrl;

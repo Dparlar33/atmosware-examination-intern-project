@@ -51,6 +51,9 @@ public class JwtService
     public String extractRoles(String token) {
         return getClaims(token).get("role", String.class);
     }
+    public String extractUserId(String token) {
+        return getClaims(token).get("id", String.class);
+    }
     public String extractUser(String token) {
         Claims claims = Jwts
                 .parser()

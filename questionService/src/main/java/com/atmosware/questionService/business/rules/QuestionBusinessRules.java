@@ -29,9 +29,11 @@ public class QuestionBusinessRules {
         return question.get();
     }
 
-    public void checkRequestRole(String requestRoleName,String questionRoleName) {
-        if (requestRoleName.equals("ORGANIZATION") && !questionRoleName.equals("ORGANIZATION")) {
-            throw new BusinessException(QuestionMessages.INVALID_REQUEST_ROLE);
+    public void checkRequestRole(String requestRoleName,Question question,String userId) {
+        if (! requestRoleName.equals("ADMIN")) {
+            if (! question.getUserId().equals(UUID.fromString(userId))){
+                throw new BusinessException(QuestionMessages.INVALID_REQUEST_ROLE);
+            }
         }
     }
 

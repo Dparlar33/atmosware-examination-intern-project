@@ -42,7 +42,7 @@ public class AuthManager implements AuthService {
         claims.put("id", user.getId());
         claims.put("username", user.getEmail());
 
-        UUID roleId = this.userRoleService.getRoleIdByUserId(user.getId());
+        UUID roleId = this.userRoleService.getRoleIdByUserId(UUID.fromString("3a150d35-fa1e-4861-8e09-ca2a210203c6"));
         String role = this.roleService.getRoleNameById(roleId);
         claims.put("role", role);
 
