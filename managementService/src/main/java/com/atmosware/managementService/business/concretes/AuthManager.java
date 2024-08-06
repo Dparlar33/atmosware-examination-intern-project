@@ -29,20 +29,25 @@ public class AuthManager implements AuthService {
 
     @Override
     public String login(LoginRequest loginRequest) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+
+        Authentication authentication = this.authenticationManager.
+                authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+
         if (!authentication.isAuthenticated()) {
             throw new BusinessException(AuthMessages.LOGIN_FAILED);
         }
+
         Optional<User> user = userRepository.findByEmail(loginRequest.getEmail());
         return generateJwt(user.get());
     }
 
     private String generateJwt(User user) {
+
         Map<String, Object> claims = new HashMap<>();
         claims.put("id", user.getId());
         claims.put("username", user.getEmail());
 
-        UUID roleId = this.userRoleService.getRoleIdByUserId(UUID.fromString("3a150d35-fa1e-4861-8e09-ca2a210203c6"));
+        UUID roleId = this.userRoleService.getRoleIdByUserId(user.getId());
         String role = this.roleService.getRoleNameById(roleId);
         claims.put("role", role);
 

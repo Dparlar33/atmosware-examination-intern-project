@@ -7,12 +7,19 @@ import com.atmosware.questionService.business.dtos.responses.option.GetOptionByI
 import com.atmosware.questionService.business.dtos.responses.option.OptionResponse;
 import com.atmosware.questionService.entities.Option;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-@Mapper(config = MapStructureService.class)
+@Mapper(componentModel = "spring")
 public interface OptionMapper {
+
     Option createOptionRequestToOption(CreateOptionRequest createOptionRequest);
+
     Option updateOptionRequestToOption(UpdateOptionRequest updateOptionRequest);
+
+    @Mapping(source = "question.id", target = "questionId")
     GetAllOptionsResponse optionToGetAllOptionResponse(Option option);
+
     GetOptionByIdResponse optionToGetOptionByIdResponse(Option option);
+
     OptionResponse optionToOptionResponse(Option option);
 }

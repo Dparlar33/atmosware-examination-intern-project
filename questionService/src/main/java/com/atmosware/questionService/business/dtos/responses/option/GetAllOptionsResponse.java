@@ -1,5 +1,6 @@
 package com.atmosware.questionService.business.dtos.responses.option;
 
+import com.atmosware.questionService.entities.Question;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

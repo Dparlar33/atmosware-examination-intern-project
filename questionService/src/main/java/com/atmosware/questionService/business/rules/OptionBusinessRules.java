@@ -8,6 +8,7 @@ import com.atmosware.questionService.business.messages.QuestionMessages;
 import com.atmosware.questionService.core.utilities.exceptions.types.BusinessException;
 import com.atmosware.questionService.dataAccess.OptionRepository;
 import com.atmosware.questionService.entities.Option;
+import com.atmosware.questionService.entities.Question;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,7 @@ public class OptionBusinessRules {
         return option.get();
     }
 
-    public void isOptionCountLowerThanRequestedOption(GetQuestionByIdResponse question) {
+    public void isOptionCountLowerThanRequestedOption(GetQuestionByIdResponse question ) {
 
         List<Option> optionList = this.optionRepository.findOptionsByQuestionId(question.getId());
 
@@ -39,7 +40,7 @@ public class OptionBusinessRules {
     }
 
     public void imageAndDescriptionShouldNotBeNullInTheOneOption(CreateOptionRequest createOptionRequest){
-        if (createOptionRequest.getDescription().equals(null) && createOptionRequest.getImageUrl().equals(null)){
+        if (createOptionRequest.getDescription().isEmpty() && createOptionRequest.getImageUrl().isEmpty()){
             throw new BusinessException(OptionMessages.DESCRIPTION_AND_IMAGE_URL_CANNOT_BE_NULL_AT_THE_SAME_OPTION);
         }
     }

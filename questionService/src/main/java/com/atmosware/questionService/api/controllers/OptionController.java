@@ -6,6 +6,9 @@ import com.atmosware.questionService.business.dtos.requests.option.UpdateOptionR
 import com.atmosware.questionService.business.dtos.responses.option.GetAllOptionsResponse;
 import com.atmosware.questionService.business.dtos.responses.option.GetOptionByIdResponse;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,14 +31,22 @@ public class OptionController {
         this.optionService.updateOption(updateOptionRequest);
     }
 
+    //?page=1&size=20
     @GetMapping("/getAllOptions")
-    public List<GetAllOptionsResponse> getAllOptions() {
-        return this.optionService.getAllOptions();
+    public Page<GetAllOptionsResponse> getAllOptions(@RequestParam int page,
+                                                     @RequestParam int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return this.optionService.getAllOptions(pageable);
     }
 
     @GetMapping("/getById/{id}")
     public GetOptionByIdResponse getAllOptions(@PathVariable UUID id) throws Exception {
         return this.optionService.getOptionById(id);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void delete(@PathVariable UUID id)  {
+        this.optionService.deleteOption(id);
     }
 }
 

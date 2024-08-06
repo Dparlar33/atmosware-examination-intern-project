@@ -68,5 +68,4 @@ public class UserManager implements UserService {
         return userRepository.findByEmail(username)
                 .orElseThrow(() -> new BusinessException(AuthMessages.LOGIN_FAILED));
     }
-
 }

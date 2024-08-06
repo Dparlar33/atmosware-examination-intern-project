@@ -5,15 +5,15 @@ import com.atmosware.managementService.business.dtos.requests.user.UpdateUserReq
 import com.atmosware.managementService.business.dtos.responses.user.GetUserByIdResponse;
 import com.atmosware.managementService.entities.User;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
+    @Mapping(source = "email", target = "email")
     User registerRequestToUser(RegisterRequest registerRequest);
 
     User updateUserRequestToUser(UpdateUserRequest updateUserRequest);
 
     GetUserByIdResponse userToGetUserById(User user);
-
-    User getUserByIdToUser(GetUserByIdResponse getUserByIdResponse);
 }

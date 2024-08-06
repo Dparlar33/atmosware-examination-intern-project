@@ -6,15 +6,16 @@ import com.atmosware.questionService.business.dtos.responses.question.GetAllQues
 import com.atmosware.questionService.business.dtos.responses.question.GetQuestionAndOptionResponse;
 import com.atmosware.questionService.business.dtos.responses.question.GetQuestionByIdResponse;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface QuestionService {
     void addQuestion(CreateQuestionRequest createQuestionRequest, HttpServletRequest httpServletRequest);
-    List<GetAllQuestionsResponse> getAllQuestions();
+    Page<GetAllQuestionsResponse> getAllQuestions(Pageable pageable);
     GetQuestionByIdResponse getQuestionById(UUID id) throws Exception;
     void updateQuestion(UpdateQuestionRequest updateQuestionRequest, HttpServletRequest httpServletRequest);
     void deleteQuestion(UUID id, HttpServletRequest httpServletRequest);
-    GetQuestionAndOptionResponse getQuestionAndOptionById(UUID questionId, HttpServletRequest httpServletRequest);
 }

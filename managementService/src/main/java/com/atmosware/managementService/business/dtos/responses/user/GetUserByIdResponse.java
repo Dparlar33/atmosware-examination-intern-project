@@ -14,5 +14,4 @@ import java.util.UUID;
 public class GetUserByIdResponse {
     private UUID id;
     private String email;
-    private String roleName;
 }
