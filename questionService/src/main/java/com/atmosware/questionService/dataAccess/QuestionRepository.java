@@ -1,7 +1,6 @@
 package com.atmosware.questionService.dataAccess;
 
 
-import com.atmosware.questionService.entities.Option;
 import com.atmosware.questionService.entities.Question;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
