@@ -9,8 +9,6 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
-
-    @Mapping(source = "email", target = "email")
     User registerRequestToUser(RegisterRequest registerRequest);
 
     User updateUserRequestToUser(UpdateUserRequest updateUserRequest);
