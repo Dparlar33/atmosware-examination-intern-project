@@ -11,6 +11,14 @@ eureka:
 server:
   port: 10044
 
+grpc:
+  server:
+    port: 10077
+  client:
+    userService:
+      address: static://localhost:10076
+      negotiation-type: plaintext
+
 
 spring:
   application:

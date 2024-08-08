@@ -28,14 +28,14 @@ public class RuleController {
     @PostMapping("/add")
     public ResponseEntity<CreateRuleResponse> createRule(@RequestBody CreateRuleRequest createRuleRequest) {
         CreateRuleUseCaseOutput output = this.createUseCase.execute(
-                        new CreateRuleUseCaseInput(
-                                createRuleRequest.getDescription()));
+                new CreateRuleUseCaseInput(
+                        createRuleRequest.getDescription()));
         return new ResponseEntity<>(output.getCreateRuleResponse(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<GetRuleByIdResponse> getRule(@PathVariable UUID id) {
-         GetRuleByIdUseCaseOutput output =
+        GetRuleByIdUseCaseOutput output =
                 this.getRuleByIdUseCase.execute(new GetRuleByIdUseCaseInput(id));
         return new ResponseEntity<>(output.getGetRuleByIdResponse(), HttpStatus.OK);
     }

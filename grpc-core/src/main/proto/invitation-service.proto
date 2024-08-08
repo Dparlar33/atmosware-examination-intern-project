@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package tr.com.atmosware.invitation;
+
+option java_multiple_files = true;
+option java_package = "tr.com.atmosware.invitation";
+
+import "google/protobuf/empty.proto";
+
+service InvitationService{
+  rpc sendMail(SendMailRequest) returns (SentMailResponse){}
+}
+
+message SendMailRequest{
+  string email=1;
+  string url = 2;
+  string description =3;
+}
+
+message SentMailResponse{
+  string message =1;
+}

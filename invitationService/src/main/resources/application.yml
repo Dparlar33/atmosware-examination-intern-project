@@ -11,6 +11,10 @@ eureka:
 server:
   port: 10055
 
+grpc:
+  server:
+    port: 10076
+
 spring:
   application:
     name: invitationService

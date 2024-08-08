@@ -13,7 +13,7 @@ public class CreateRuleUseCase implements UseCase<CreateRuleUseCaseInput, Create
     private final RuleRepository ruleRepository;
 
     @Override
-     public CreateRuleUseCaseOutput execute(CreateRuleUseCaseInput input) {
+    public CreateRuleUseCaseOutput execute(CreateRuleUseCaseInput input) {
 
         Rule rule = new Rule();
         rule.setDescription(input.getDescription());

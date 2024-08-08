@@ -2,13 +2,13 @@ package com.atmosware.examService.Rules.usecases.deleterule;
 
 import com.atmosware.examService.Rules.RuleRepository;
 import com.atmosware.examService.usecase.VoidUseCase;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class DeleteRuleVoidUseCase implements VoidUseCase<DeleteRuleVoidUseCaseInput> {
     private final RuleRepository ruleRepository;
 
