@@ -1,6 +1,6 @@
-package com.atmosware.questionService.business.dtos.responses.question;
+package com.atmosware.common.exam;
 
-import com.atmosware.questionService.business.dtos.responses.option.OptionResponse;
+import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,8 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class GetQuestionAndOptionResponse {
+@Embeddable
+public class GetQuestionAndOption {
     private String userRole;
     private String description;
     private int optionCount;

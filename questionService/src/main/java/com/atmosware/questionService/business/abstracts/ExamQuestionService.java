@@ -1,10 +1,10 @@
 package com.atmosware.questionService.business.abstracts;
 
-import com.atmosware.questionService.business.dtos.responses.question.GetQuestionAndOptionResponse;
+import com.atmosware.common.exam.GetQuestionAndOption;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.UUID;
 
 public interface ExamQuestionService {
-    GetQuestionAndOptionResponse getQuestionAndOptionById(UUID questionId, HttpServletRequest httpServletRequest);
+    GetQuestionAndOption getQuestionAndOptionById(UUID questionId, HttpServletRequest httpServletRequest);
 }

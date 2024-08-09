@@ -91,6 +91,12 @@
         <dependency>
             <groupId>com.atmosware</groupId>
             <artifactId>core</artifactId>
+            <version>0.0.2-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.atmosware</groupId>
+            <artifactId>common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>

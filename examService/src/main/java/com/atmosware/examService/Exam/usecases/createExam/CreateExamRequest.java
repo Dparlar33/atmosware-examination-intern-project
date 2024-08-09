@@ -1,4 +1,4 @@
-package com.atmosware.questionService.business.dtos.responses.option;
+package com.atmosware.examService.Exam.usecases.createExam;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class OptionResponse {
+public class CreateExamRequest {
     private String description;
-    private boolean isCorrect;
-    private String imageUrl;
+    private double duration;
 }

@@ -3,13 +3,11 @@ package com.atmosware.questionService.business.abstracts;
 import com.atmosware.questionService.business.dtos.requests.question.CreateQuestionRequest;
 import com.atmosware.questionService.business.dtos.requests.question.UpdateQuestionRequest;
 import com.atmosware.questionService.business.dtos.responses.question.GetAllQuestionsResponse;
-import com.atmosware.questionService.business.dtos.responses.question.GetQuestionAndOptionResponse;
 import com.atmosware.questionService.business.dtos.responses.question.GetQuestionByIdResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 import java.util.UUID;
 
 public interface QuestionService {

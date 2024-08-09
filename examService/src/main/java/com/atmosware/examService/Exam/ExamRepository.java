@@ -1,4 +1,8 @@
 package com.atmosware.examService.Exam;
 
-public interface ExamRepository {
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+import java.util.UUID;
+
+public interface ExamRepository extends MongoRepository<Exam, UUID> {
 }

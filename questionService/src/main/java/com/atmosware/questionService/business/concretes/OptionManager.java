@@ -1,12 +1,12 @@
 package com.atmosware.questionService.business.concretes;
 
+import com.atmosware.common.exam.OptionResponse;
 import com.atmosware.questionService.business.abstracts.OptionService;
 import com.atmosware.questionService.business.abstracts.QuestionService;
 import com.atmosware.questionService.business.dtos.requests.option.CreateOptionRequest;
 import com.atmosware.questionService.business.dtos.requests.option.UpdateOptionRequest;
 import com.atmosware.questionService.business.dtos.responses.option.GetAllOptionsResponse;
 import com.atmosware.questionService.business.dtos.responses.option.GetOptionByIdResponse;
-import com.atmosware.questionService.business.dtos.responses.option.OptionResponse;
 import com.atmosware.questionService.business.dtos.responses.question.GetQuestionByIdResponse;
 import com.atmosware.questionService.business.rules.OptionBusinessRules;
 import com.atmosware.questionService.core.utilities.mapping.OptionMapper;

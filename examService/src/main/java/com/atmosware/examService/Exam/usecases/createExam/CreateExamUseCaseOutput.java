@@ -1,4 +1,4 @@
-package com.atmosware.examService.Rules.usecases.createrule;
+package com.atmosware.examService.Exam.usecases.createExam;
 
 import com.atmosware.examService.usecase.UseCaseOutput;
 import lombok.AllArgsConstructor;
@@ -10,6 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CreateRuleUseCaseOutput implements UseCaseOutput {
-    private CreateRuleResponse createRuleResponse;
+public class CreateExamUseCaseOutput implements UseCaseOutput {
+    private CreateExamResponse createExamResponse;
 }

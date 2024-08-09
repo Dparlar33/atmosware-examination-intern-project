@@ -1,9 +1,9 @@
 package com.atmosware.questionService.business.concretes;
 
+import com.atmosware.common.exam.GetQuestionAndOption;
+import com.atmosware.common.exam.OptionResponse;
 import com.atmosware.questionService.business.abstracts.ExamQuestionService;
 import com.atmosware.questionService.business.abstracts.OptionService;
-import com.atmosware.questionService.business.dtos.responses.option.OptionResponse;
-import com.atmosware.questionService.business.dtos.responses.question.GetQuestionAndOptionResponse;
 import com.atmosware.questionService.business.rules.QuestionBusinessRules;
 import com.atmosware.questionService.core.utilities.mapping.QuestionMapper;
 import com.atmosware.questionService.dataAccess.QuestionRepository;
@@ -25,7 +25,7 @@ public class ExamQuestionManager implements ExamQuestionService {
     private QuestionMapper questionMapper;
 
     @Override
-    public GetQuestionAndOptionResponse getQuestionAndOptionById(UUID questionId, HttpServletRequest httpServletRequest) {
+    public GetQuestionAndOption getQuestionAndOptionById(UUID questionId, HttpServletRequest httpServletRequest) {
         Question question = this.questionBusinessRules.isQuestionExistById(questionId);
 
         List<OptionResponse> optionResponseList = this.optionService.getOptionsByQuestionId(questionId);
@@ -37,7 +37,7 @@ public class ExamQuestionManager implements ExamQuestionService {
         question.setStatus(Status.OCCUPIED);
         this.questionRepository.save(question);
 
-        GetQuestionAndOptionResponse getQuestionAndOptionResponse = this.questionMapper.questionToGetQuestionAndOptionResponse(question);
+        GetQuestionAndOption getQuestionAndOptionResponse = this.questionMapper.questionToGetQuestionAndOptionResponse(question);
 
         getQuestionAndOptionResponse.setOptionResponseList(optionResponseList);
         return getQuestionAndOptionResponse;

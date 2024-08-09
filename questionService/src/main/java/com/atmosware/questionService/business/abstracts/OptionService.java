@@ -1,10 +1,10 @@
 package com.atmosware.questionService.business.abstracts;
 
+import com.atmosware.common.exam.OptionResponse;
 import com.atmosware.questionService.business.dtos.requests.option.CreateOptionRequest;
 import com.atmosware.questionService.business.dtos.requests.option.UpdateOptionRequest;
 import com.atmosware.questionService.business.dtos.responses.option.GetAllOptionsResponse;
 import com.atmosware.questionService.business.dtos.responses.option.GetOptionByIdResponse;
-import com.atmosware.questionService.business.dtos.responses.option.OptionResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

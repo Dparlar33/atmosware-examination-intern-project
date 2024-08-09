@@ -1,8 +1,8 @@
 package com.atmosware.questionService.business.rules;
 
 
+import com.atmosware.common.exam.OptionResponse;
 import com.atmosware.questionService.business.dtos.requests.question.CreateQuestionRequest;
-import com.atmosware.questionService.business.dtos.responses.option.OptionResponse;
 import com.atmosware.questionService.business.messages.QuestionMessages;
 import com.atmosware.questionService.core.utilities.exceptions.types.BusinessException;
 import com.atmosware.questionService.dataAccess.QuestionRepository;
