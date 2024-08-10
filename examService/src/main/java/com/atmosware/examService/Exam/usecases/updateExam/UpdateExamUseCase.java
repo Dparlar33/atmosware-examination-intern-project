@@ -16,7 +16,7 @@ public class UpdateExamUseCase implements UseCase<UpdateExamUseCaseInput,UpdateE
 
     private final ExamRepository examRepository;
     private final ExamBusinessRules examBusinessRules;
-    private JwtService jwtService;
+    private final JwtService jwtService;
 
     @Override
     public UpdateExamUseCaseOutput execute(UpdateExamUseCaseInput input, HttpServletRequest request) {

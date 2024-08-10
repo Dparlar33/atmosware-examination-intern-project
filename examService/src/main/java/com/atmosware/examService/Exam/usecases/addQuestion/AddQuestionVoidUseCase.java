@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class AddQuestionVoidUseCase implements VoidUseCase<AddQuestionUseCaseInput> {
@@ -23,7 +25,9 @@ public class AddQuestionVoidUseCase implements VoidUseCase<AddQuestionUseCaseInp
 
     @Override
     public void execute(AddQuestionUseCaseInput input, HttpServletRequest request) {
+
         Exam exam = this.examBusinessRules.checkExamIsAlreadyStarted(input.getAddQuestionRequest().getExamId());
+        this.examBusinessRules.isQuestionAlreadyAdded(exam, UUID.fromString(input.getAddQuestionRequest().getQuestionId()));
 
         String token = extractJwtFromRequest(request);
         String roleName = this.jwtService.extractRoles(token);
@@ -34,7 +38,6 @@ public class AddQuestionVoidUseCase implements VoidUseCase<AddQuestionUseCaseInp
         GetQuestionAndOption getQuestionAndOption = this.questionClient.
                 getQuestionAndOption(input.getAddQuestionRequest().getQuestionId());
 
-        assert exam != null;
         exam.getQuestionAndOptions().add(getQuestionAndOption);
 
         this.examRepository.save(exam);

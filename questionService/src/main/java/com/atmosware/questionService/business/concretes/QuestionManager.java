@@ -1,7 +1,6 @@
 package com.atmosware.questionService.business.concretes;
 
 import com.atmosware.core.services.JwtService;
-import com.atmosware.questionService.business.abstracts.OptionService;
 import com.atmosware.questionService.business.abstracts.QuestionService;
 import com.atmosware.questionService.business.dtos.requests.question.CreateQuestionRequest;
 import com.atmosware.questionService.business.dtos.requests.question.UpdateQuestionRequest;
@@ -19,7 +18,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
