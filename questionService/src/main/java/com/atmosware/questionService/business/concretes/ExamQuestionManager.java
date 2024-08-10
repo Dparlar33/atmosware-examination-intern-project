@@ -25,7 +25,7 @@ public class ExamQuestionManager implements ExamQuestionService {
     private QuestionMapper questionMapper;
 
     @Override
-    public GetQuestionAndOption getQuestionAndOptionById(UUID questionId, HttpServletRequest httpServletRequest) {
+    public GetQuestionAndOption getQuestionAndOptionById(UUID questionId) {
         Question question = this.questionBusinessRules.isQuestionExistById(questionId);
 
         List<OptionResponse> optionResponseList = this.optionService.getOptionsByQuestionId(questionId);

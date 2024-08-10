@@ -19,7 +19,7 @@ public class ExamQuestionController {
     private ExamQuestionService examQuestionService;
 
     @GetMapping("/getById/{questionId}")
-    public GetQuestionAndOption getQuestionAndOption(@PathVariable String questionId, HttpServletRequest request) {
-        return this.examQuestionService.getQuestionAndOptionById(UUID.fromString(questionId),request);
+    public GetQuestionAndOption getQuestionAndOption(@PathVariable String questionId) {
+        return this.examQuestionService.getQuestionAndOptionById(UUID.fromString(questionId));
     }
 }

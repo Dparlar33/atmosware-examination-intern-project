@@ -18,7 +18,7 @@ public class StartExamVoidUseCase implements VoidUseCase<StartExamUseCaseInput> 
 
     @Override
     public void execute(StartExamUseCaseInput input, HttpServletRequest request) {
-        Exam exam = this.examRepository.findById(input.getStartExamRequest().getExamId()).orElse(null);
+        Exam exam = this.examRepository.findById(input.getExamId()).orElse(null);
 
         assert exam != null;
         exam.setStartTime(LocalDateTime.now());

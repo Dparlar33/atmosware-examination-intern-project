@@ -48,6 +48,8 @@ public class Exam {
 
     public Exam() {
         this.id = UUID.randomUUID();
+        this.startTime = null;
+        this.endTime = null;
         this.createdDate = LocalDateTime.now();
         this.updatedDate = LocalDateTime.now();
     }

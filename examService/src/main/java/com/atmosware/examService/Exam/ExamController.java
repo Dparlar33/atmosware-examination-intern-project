@@ -39,7 +39,7 @@ public class ExamController {
     private final UseCase<UpdateExamUseCaseInput, UpdateExamUseCaseOutput> updateExamUseCase;
 
     @PostMapping("/add")
-    public ResponseEntity<CreatedExamResponse> createRule(@RequestBody CreateExamRequest createExamRequest, HttpServletRequest request) {
+    public ResponseEntity<CreatedExamResponse> createExam(@RequestBody CreateExamRequest createExamRequest, HttpServletRequest request) {
         CreateExamUseCaseOutput output = this.createUseCase.execute(
                 new CreateExamUseCaseInput(
                         createExamRequest.getDescription(),
@@ -48,15 +48,16 @@ public class ExamController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<UpdatedExamResponse> updateRule(@RequestBody UpdateExamRequest updateExamRequest, HttpServletRequest request) {
+    public ResponseEntity<UpdatedExamResponse> updateExam(@RequestBody UpdateExamRequest updateExamRequest, HttpServletRequest request) {
         UpdateExamUseCaseOutput output = this.updateExamUseCase.execute(
                 new UpdateExamUseCaseInput(
                        updateExamRequest),request);
         return new ResponseEntity<>(output.getUpdatedExamResponse(), HttpStatus.OK);
     }
 
+
     @GetMapping("/getById/{id}")
-    public ResponseEntity<GetExamByIdResponse> getRule(@PathVariable UUID id, HttpServletRequest request) {
+    public ResponseEntity<GetExamByIdResponse> getExam(@PathVariable UUID id, HttpServletRequest request) {
         GetExamUseCaseOutput output =
                 this.getExamUseCase.execute(new GetExamUseCaseInput(id),request);
         return new ResponseEntity<>(output.getGetExamByIdResponse(), HttpStatus.OK);
@@ -73,7 +74,7 @@ public class ExamController {
     }
 
     @GetMapping("/start-exam")
-    public void startExam(StartExamUseCaseInput input ,HttpServletRequest request) {
+    public void startExam(@RequestBody StartExamUseCaseInput input ,HttpServletRequest request) {
         this.startExamUseCase.execute(input, request);
     }
 

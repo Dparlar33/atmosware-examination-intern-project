@@ -38,12 +38,18 @@ public class QuestionBusinessRules {
     }
 
     public void atLeastOneCorrectOptionMustBe(List<OptionResponse> optionResponseList){
+        boolean hasCorrectOption = false;
+
         for (OptionResponse optionResponse : optionResponseList) {
             if (optionResponse.isCorrect()) {
+                hasCorrectOption = true;
                 break;
             }
         }
-        throw new BusinessException(QuestionMessages.QUESTION_HAS_TO_INCLUDE_ONE_CORRECT_OPTION_OR_CHANGE_ONE_OPTION_TO_CORRECT);
+
+        if (!hasCorrectOption) {
+            throw new BusinessException(QuestionMessages.QUESTION_HAS_TO_INCLUDE_ONE_CORRECT_OPTION_OR_CHANGE_ONE_OPTION_TO_CORRECT);
+        }
     }
 
     public void imageAndDescriptionShouldNotBeNullInTheOneQuestion(CreateQuestionRequest createQuestionRequest){

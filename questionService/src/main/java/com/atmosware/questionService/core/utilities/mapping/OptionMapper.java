@@ -20,5 +20,6 @@ public interface OptionMapper {
 
     GetOptionByIdResponse optionToGetOptionByIdResponse(Option option);
 
+    @Mapping(source = "description", target = "description")
     OptionResponse optionToOptionResponse(Option option);
 }
