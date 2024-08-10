@@ -51,8 +51,8 @@ public class CreateExamUseCase implements UseCase<CreateExamUseCaseInput, Create
         return null;
     }
 
-    private static CreateExamResponse buildCreateExamResponse(final Exam exam) {
-        return new CreateExamResponse(
+    private static CreatedExamResponse buildCreateExamResponse(final Exam exam) {
+        return new CreatedExamResponse(
                 exam.getId(),
                 exam.getDescription(),
                 exam.getDuration(),

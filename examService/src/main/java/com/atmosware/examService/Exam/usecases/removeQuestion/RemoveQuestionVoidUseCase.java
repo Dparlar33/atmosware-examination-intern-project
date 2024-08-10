@@ -1,29 +1,29 @@
-package com.atmosware.examService.Exam.usecases.addQuestion;
+package com.atmosware.examService.Exam.usecases.removeQuestion;
 
 import com.atmosware.common.exam.GetQuestionAndOption;
 import com.atmosware.core.services.JwtService;
 import com.atmosware.examService.Exam.Exam;
 import com.atmosware.examService.Exam.ExamBusinessRules;
 import com.atmosware.examService.Exam.ExamRepository;
-import com.atmosware.examService.Exam.QuestionClient;
 import com.atmosware.examService.usecase.VoidUseCase;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
-public class AddQuestionVoidUseCase implements VoidUseCase<AddQuestionUseCaseInput> {
+public class RemoveQuestionVoidUseCase implements VoidUseCase <RemoveQuestionVoidUseCaseInput>{
 
-    private final QuestionClient questionClient;
     private final ExamRepository examRepository;
     private final ExamBusinessRules examBusinessRules;
     private final JwtService jwtService;
 
     @Override
-    public void execute(AddQuestionUseCaseInput input, HttpServletRequest request) {
-        Exam exam = this.examBusinessRules.checkExamIsAlreadyStarted(input.getAddQuestionRequest().getExamId());
+    public void execute(RemoveQuestionVoidUseCaseInput input, HttpServletRequest request) {
+        Exam exam = this.examBusinessRules.checkExamIsAlreadyStarted(input.getRemoveQuestionRequest().getExamId());
 
         String token = extractJwtFromRequest(request);
         String roleName = this.jwtService.extractRoles(token);
@@ -31,11 +31,10 @@ public class AddQuestionVoidUseCase implements VoidUseCase<AddQuestionUseCaseInp
 
         this.examBusinessRules.checkRequestRole(roleName, exam, userId);
 
-        GetQuestionAndOption getQuestionAndOption = this.questionClient.
-                getQuestionAndOption(input.getAddQuestionRequest().getQuestionId());
-
-        assert exam != null;
-        exam.getQuestionAndOptions().add(getQuestionAndOption);
+        List<GetQuestionAndOption> questionAndOptions = exam.getQuestionAndOptions();
+        questionAndOptions.removeIf(item -> item.getQuestionId().
+                equals(input.getRemoveQuestionRequest().getQuestionId()));
+        exam.setQuestionAndOptions(questionAndOptions);
 
         this.examRepository.save(exam);
     }

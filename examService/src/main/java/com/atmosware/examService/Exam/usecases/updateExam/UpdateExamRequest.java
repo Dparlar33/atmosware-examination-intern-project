@@ -1,6 +1,6 @@
-package com.atmosware.examService.Exam.usecases.createExam;
+package com.atmosware.examService.Exam.usecases.updateExam;
 
-import com.atmosware.common.exam.GetQuestionAndOption;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,10 +13,9 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateExamResponse {
-    private UUID id;
+public class UpdateExamRequest {
+    private UUID examId;
     private String description;
     private double duration;
     private List<String> rules;
-    private List<GetQuestionAndOption> questionAndOptions;
 }

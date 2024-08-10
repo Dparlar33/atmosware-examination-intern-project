@@ -29,6 +29,9 @@ public class Exam {
     private UUID userId;
     private String roleName;
 
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
+
     @Field("rules")
     private List<String> rules;
 

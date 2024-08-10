@@ -11,5 +11,5 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class CreateExamUseCaseOutput implements UseCaseOutput {
-    private CreateExamResponse createExamResponse;
+    private CreatedExamResponse createdExamResponse;
 }
