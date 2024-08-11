@@ -14,7 +14,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -44,7 +43,7 @@ public class QuestionController {
     }
 
     @GetMapping("/getById/{id}")
-    public GetQuestionByIdResponse getAllQuestions(@PathVariable UUID id) throws Exception {
+    public GetQuestionByIdResponse getQuestionById(@PathVariable UUID id) throws Exception {
         return this.questionService.getQuestionById(id);
     }
 

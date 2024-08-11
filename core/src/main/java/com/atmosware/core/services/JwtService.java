@@ -5,12 +5,13 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.security.Key;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 @Service
@@ -77,5 +78,16 @@ public class JwtService
     private Key getSignKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
+    }
+
+    public String extractJwtFromRequest(HttpServletRequest request) {
+
+        String bearerToken = request.getHeader("Authorization");
+
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7);
+        }
+
+        return null;
     }
 }

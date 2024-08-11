@@ -19,7 +19,6 @@ public class SecurityManager implements SecurityService {
             "/v3/api-docs/**",
             "/api/v1/auth/**",
             "/question-service/api/v1/questions/**",
-            "/question-service/api/v1/exam-questions/getById/**"
     };
 
     @Override

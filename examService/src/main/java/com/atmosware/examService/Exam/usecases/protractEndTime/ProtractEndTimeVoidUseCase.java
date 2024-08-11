@@ -9,7 +9,6 @@ import com.atmosware.examService.usecase.VoidUseCase;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 
@@ -26,7 +25,7 @@ public class ProtractEndTimeVoidUseCase implements VoidUseCase<ProtractEndTimeUs
         Exam exam = this.examBusinessRules.
                 checkExamIsStartedAndNotFinished(input.getProtractEndTimeRequest().getExamId());
 
-        String token = extractJwtFromRequest(request);
+        String token = this.jwtService.extractJwtFromRequest(request);
         String roleName = this.jwtService.extractRoles(token);
         String userId = this.jwtService.extractUserId(token);
 
@@ -35,13 +34,5 @@ public class ProtractEndTimeVoidUseCase implements VoidUseCase<ProtractEndTimeUs
         LocalDateTime newEndTime = exam.getEndTime().plusMinutes((long) input.getProtractEndTimeRequest().getExtraTime());
         exam.setEndTime(newEndTime);
         this.examRepository.save(exam);
-    }
-
-    public String extractJwtFromRequest(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7);
-        }
-        return null;
     }
 }

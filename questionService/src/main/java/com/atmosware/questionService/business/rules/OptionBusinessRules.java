@@ -1,14 +1,11 @@
 package com.atmosware.questionService.business.rules;
 
 import com.atmosware.questionService.business.dtos.requests.option.CreateOptionRequest;
-import com.atmosware.questionService.business.dtos.requests.question.CreateQuestionRequest;
 import com.atmosware.questionService.business.dtos.responses.question.GetQuestionByIdResponse;
 import com.atmosware.questionService.business.messages.OptionMessages;
-import com.atmosware.questionService.business.messages.QuestionMessages;
 import com.atmosware.questionService.core.utilities.exceptions.types.BusinessException;
 import com.atmosware.questionService.dataAccess.OptionRepository;
 import com.atmosware.questionService.entities.Option;
-import com.atmosware.questionService.entities.Question;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +31,7 @@ public class OptionBusinessRules {
 
         List<Option> optionList = this.optionRepository.findOptionsByQuestionId(question.getId());
 
-        if (optionList.size() > question.getOptionCount()){
+        if (optionList.size() >= question.getOptionCount()){
             throw new BusinessException(OptionMessages.OPTION_LIMIT_FULL_FOR_THIS_QUESTION);
         }
     }

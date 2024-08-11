@@ -5,9 +5,8 @@ import com.atmosware.examService.Exam.Exam;
 import com.atmosware.examService.Exam.ExamRepository;
 import com.atmosware.examService.usecase.UseCase;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -23,7 +22,7 @@ public class CreateExamUseCase implements UseCase<CreateExamUseCaseInput, Create
     @Override
     public CreateExamUseCaseOutput execute(CreateExamUseCaseInput input, HttpServletRequest request) {
 
-        String token = extractJwtFromRequest(request);
+        String token = this.jwtService.extractJwtFromRequest(request);
         String roleName = this.jwtService.extractRoles(token);
         String userId = this.jwtService.extractUserId(token);
 
@@ -40,16 +39,6 @@ public class CreateExamUseCase implements UseCase<CreateExamUseCaseInput, Create
         return new CreateExamUseCaseOutput(buildCreateExamResponse(savedExam));
     }
 
-    public String extractJwtFromRequest(HttpServletRequest request) {
-
-        String bearerToken = request.getHeader("Authorization");
-
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7);
-        }
-
-        return null;
-    }
 
     private static CreatedExamResponse buildCreateExamResponse(final Exam exam) {
         return new CreatedExamResponse(

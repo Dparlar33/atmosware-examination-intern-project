@@ -16,8 +16,10 @@ public interface OptionMapper {
 
     Option updateOptionRequestToOption(UpdateOptionRequest updateOptionRequest);
 
+    @Mapping(source = "question.id", target = "questionId")
     GetAllOptionsResponse optionToGetAllOptionResponse(Option option);
 
+    @Mapping(source = "question.id", target = "questionId")
     GetOptionByIdResponse optionToGetOptionByIdResponse(Option option);
 
     @Mapping(source = "description", target = "description")

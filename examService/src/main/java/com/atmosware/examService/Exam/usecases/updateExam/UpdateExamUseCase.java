@@ -22,7 +22,7 @@ public class UpdateExamUseCase implements UseCase<UpdateExamUseCaseInput,UpdateE
     public UpdateExamUseCaseOutput execute(UpdateExamUseCaseInput input, HttpServletRequest request) {
         Exam exam = this.examBusinessRules.checkExamIsAlreadyStarted(input.getUpdateExamRequest().getExamId());
 
-        String token = extractJwtFromRequest(request);
+        String token = this.jwtService.extractJwtFromRequest(request);
         String roleName = this.jwtService.extractRoles(token);
         String userId = this.jwtService.extractUserId(token);
 
@@ -36,17 +36,6 @@ public class UpdateExamUseCase implements UseCase<UpdateExamUseCaseInput,UpdateE
         this.examRepository.save(exam);
 
         return new UpdateExamUseCaseOutput(buildUpdatedExamResponse(exam));
-    }
-
-    public String extractJwtFromRequest(HttpServletRequest request) {
-
-        String bearerToken = request.getHeader("Authorization");
-
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7);
-        }
-
-        return null;
     }
 
     private static UpdatedExamResponse buildUpdatedExamResponse(final Exam exam) {

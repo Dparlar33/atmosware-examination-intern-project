@@ -16,7 +16,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.UUID;
 
@@ -34,7 +33,7 @@ public class QuestionManager implements QuestionService {
 
         this.questionBusinessRules.imageAndDescriptionShouldNotBeNullInTheOneQuestion(createQuestionRequest);
 
-        String token = extractJwtFromRequest(httpServletRequest);
+        String token = this.jwtService.extractJwtFromRequest(httpServletRequest);
         String roleName = this.jwtService.extractRoles(token);
         String userId = this.jwtService.extractUserId(token);
 
@@ -44,17 +43,6 @@ public class QuestionManager implements QuestionService {
         mappedQuestion.setUserId(UUID.fromString(userId));
 
         this.questionRepository.save(mappedQuestion);
-    }
-
-    public String extractJwtFromRequest(HttpServletRequest request) {
-
-        String bearerToken = request.getHeader("Authorization");
-
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7);
-        }
-
-        return null;
     }
 
     @Override
@@ -79,7 +67,7 @@ public class QuestionManager implements QuestionService {
 
         this.questionBusinessRules.isQuestionAvailable(question);
 
-        String token = extractJwtFromRequest(httpServletRequest);
+        String token = this.jwtService.extractJwtFromRequest(httpServletRequest);
         String roleName = this.jwtService.extractRoles(token);
         String userId = this.jwtService.extractUserId(token);
 
@@ -95,7 +83,7 @@ public class QuestionManager implements QuestionService {
         Question question =
                 this.questionBusinessRules.isQuestionExistById(id);
 
-        String token = extractJwtFromRequest(httpServletRequest);
+        String token = this.jwtService.extractJwtFromRequest(httpServletRequest);
         String roleName = this.jwtService.extractRoles(token);
         String userId = this.jwtService.extractUserId(token);
 

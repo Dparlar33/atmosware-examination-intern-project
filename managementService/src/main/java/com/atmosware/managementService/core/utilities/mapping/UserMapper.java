@@ -13,5 +13,6 @@ public interface UserMapper {
 
     User updateUserRequestToUser(UpdateUserRequest updateUserRequest);
 
+    @Mapping(source = "email", target = "email")
     GetUserByIdResponse userToGetUserById(User user);
 }

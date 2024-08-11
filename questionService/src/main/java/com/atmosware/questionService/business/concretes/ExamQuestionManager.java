@@ -9,7 +9,6 @@ import com.atmosware.questionService.core.utilities.mapping.QuestionMapper;
 import com.atmosware.questionService.dataAccess.QuestionRepository;
 import com.atmosware.questionService.entities.Question;
 import com.atmosware.questionService.entities.Status;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -39,7 +39,7 @@ public class OptionController {
     }
 
     @GetMapping("/getById/{id}")
-    public GetOptionByIdResponse getAllOptions(@PathVariable UUID id) throws Exception {
+    public GetOptionByIdResponse getOptionsById(@PathVariable UUID id) throws Exception {
         return this.optionService.getOptionById(id);
     }
 

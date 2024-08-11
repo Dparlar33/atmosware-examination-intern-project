@@ -79,7 +79,7 @@ public class ExamController {
     }
 
     @DeleteMapping("/remove-question")
-    public void deleteQuestion(RemoveQuestionVoidUseCaseInput input, HttpServletRequest request){
+    public void deleteQuestion(@RequestBody RemoveQuestionVoidUseCaseInput input, HttpServletRequest request){
         this.removeQuestionVoidUseCase.execute(input,request);
     }
 }

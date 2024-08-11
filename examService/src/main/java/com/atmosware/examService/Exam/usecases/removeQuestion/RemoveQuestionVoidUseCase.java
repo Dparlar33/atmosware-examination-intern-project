@@ -25,7 +25,7 @@ public class RemoveQuestionVoidUseCase implements VoidUseCase <RemoveQuestionVoi
     public void execute(RemoveQuestionVoidUseCaseInput input, HttpServletRequest request) {
         Exam exam = this.examBusinessRules.checkExamIsAlreadyStarted(input.getRemoveQuestionRequest().getExamId());
 
-        String token = extractJwtFromRequest(request);
+        String token = this.jwtService.extractJwtFromRequest(request);
         String roleName = this.jwtService.extractRoles(token);
         String userId = this.jwtService.extractUserId(token);
 
@@ -39,14 +39,5 @@ public class RemoveQuestionVoidUseCase implements VoidUseCase <RemoveQuestionVoi
         this.examRepository.save(exam);
     }
 
-    public String extractJwtFromRequest(HttpServletRequest request) {
 
-        String bearerToken = request.getHeader("Authorization");
-
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7);
-        }
-
-        return null;
-    }
 }
