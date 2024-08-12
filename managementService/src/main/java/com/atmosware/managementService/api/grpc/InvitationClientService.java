@@ -8,6 +8,7 @@ import tr.com.atmosware.invitation.InvitationServiceGrpc;
 import tr.com.atmosware.invitation.SendMailRequest;
 import tr.com.atmosware.invitation.SentMailResponse;
 
+
 @Service
 public class InvitationClientService {
 

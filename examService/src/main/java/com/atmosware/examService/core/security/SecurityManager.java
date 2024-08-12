@@ -18,7 +18,8 @@ public class SecurityManager implements SecurityService {
             "/v3/api-docs",
             "/v3/api-docs/**",
             "/api/v1/auth/**",
-            "/exam-service/api/v1/exams/**"
+            "/exam-service/api/v1/exams/**",
+            "/actuator/prometheus"
     };
 
     @Override

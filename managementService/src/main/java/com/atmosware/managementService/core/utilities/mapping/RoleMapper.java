@@ -7,6 +7,5 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface RoleMapper {
-    @Mapping(source = "name", target = "name")
     GetAllRolesResponse roleToGetAllRolesResponse(Role role);
 }

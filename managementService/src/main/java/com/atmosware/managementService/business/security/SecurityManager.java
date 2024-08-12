@@ -24,7 +24,8 @@ public class SecurityManager implements SecurityService {
             "/api/v1/auth/**",
             "/management-service/api/v1/users/**",
             "/management-service/api/v1/invitation/send",
-            "/management-service/api/v1/roles/getAll"
+            "/management-service/api/v1/roles/getAll",
+            "/actuator/prometheus",
     };
 
 

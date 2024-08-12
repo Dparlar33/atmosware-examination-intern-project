@@ -14,8 +14,7 @@ public interface QuestionMapper {
     GetAllQuestionsResponse questionToGetAllQuestionsResponse(Question question);
     GetQuestionByIdResponse questionToGetQuestionByIdResponse(Question question);
 
-    @Mapping(source = "description",target = "description")
-    @Mapping(source = "id", target = "questionId")
+
     GetQuestionAndOption questionToGetQuestionAndOptionResponse(Question question);
     Question getQuestionByIdResponseToQuestion(GetQuestionByIdResponse getQuestionByIdResponse);
 }

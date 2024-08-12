@@ -24,7 +24,6 @@ public class AddQuestionVoidUseCase implements VoidUseCase<AddQuestionUseCaseInp
     private final ExamRepository examRepository;
     private final ExamBusinessRules examBusinessRules;
     private final JwtService jwtService;
-    private final RequestInterceptor requestInterceptor;
 
     @Override
     public void execute(AddQuestionUseCaseInput input, HttpServletRequest request) {
