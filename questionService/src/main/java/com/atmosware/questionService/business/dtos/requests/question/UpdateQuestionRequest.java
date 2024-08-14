@@ -1,9 +1,7 @@
 package com.atmosware.questionService.business.dtos.requests.question;
 
 import com.atmosware.questionService.business.messages.ValidationMessage;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,8 +21,8 @@ public class UpdateQuestionRequest {
     @Size(max = 2000)
     private String description;
 
-    @Size(min = 2,max = 5)
-    @Pattern(regexp = "\\d+", message = ValidationMessage.OPTION_COUNT_MUST_CONTAIN_ONLY_DIGITS)
+    @Min(2)
+    @Max(5)
     private int optionCount;
 
     private String imageUrl;

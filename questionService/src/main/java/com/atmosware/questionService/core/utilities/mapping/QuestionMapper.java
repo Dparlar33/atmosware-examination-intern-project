@@ -2,6 +2,7 @@ package com.atmosware.questionService.core.utilities.mapping;
 
 import com.atmosware.common.exam.GetQuestionAndOption;
 import com.atmosware.questionService.business.dtos.requests.question.CreateQuestionRequest;
+import com.atmosware.questionService.business.dtos.requests.question.UpdateQuestionRequest;
 import com.atmosware.questionService.business.dtos.responses.question.GetAllQuestionsResponse;
 import com.atmosware.questionService.business.dtos.responses.question.GetQuestionByIdResponse;
 import com.atmosware.questionService.entities.Question;
@@ -14,7 +15,9 @@ public interface QuestionMapper {
     GetAllQuestionsResponse questionToGetAllQuestionsResponse(Question question);
     GetQuestionByIdResponse questionToGetQuestionByIdResponse(Question question);
 
-
+    @Mapping(source = "description",target = "description")
     GetQuestionAndOption questionToGetQuestionAndOptionResponse(Question question);
     Question getQuestionByIdResponseToQuestion(GetQuestionByIdResponse getQuestionByIdResponse);
+
+    Question updateQuestionRequestToQuestion(UpdateQuestionRequest updateQuestionRequest);
 }

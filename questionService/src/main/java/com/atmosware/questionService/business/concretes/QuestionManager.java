@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -73,9 +74,14 @@ public class QuestionManager implements QuestionService {
 
         this.questionBusinessRules.checkRequestRole(roleName,question,userId);
 
-        question.setStatus(Status.AVAILABLE);
+        Question mappedQuestion = this.questionMapper.updateQuestionRequestToQuestion(updateQuestionRequest);
 
-        this.questionRepository.save(question);
+        mappedQuestion.setStatus(Status.AVAILABLE);
+        mappedQuestion.setOptions(question.getOptions());
+        mappedQuestion.setUserId(UUID.fromString(userId));
+        mappedQuestion.setUserRole(roleName);
+
+        this.questionRepository.save(mappedQuestion);
     }
 
     @Override

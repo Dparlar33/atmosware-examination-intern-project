@@ -6,6 +6,10 @@ import com.atmosware.examService.Exam.usecases.createExam.CreateExamRequest;
 import com.atmosware.examService.Exam.usecases.createExam.CreatedExamResponse;
 import com.atmosware.examService.Exam.usecases.createExam.CreateExamUseCaseInput;
 import com.atmosware.examService.Exam.usecases.createExam.CreateExamUseCaseOutput;
+import com.atmosware.examService.Exam.usecases.getAllExam.GetAllExamRequest;
+import com.atmosware.examService.Exam.usecases.getAllExam.GetAllExamResponse;
+import com.atmosware.examService.Exam.usecases.getAllExam.GetAllExamUseCaseInput;
+import com.atmosware.examService.Exam.usecases.getAllExam.GetAllExamUseCaseOutput;
 import com.atmosware.examService.Exam.usecases.getExam.GetExamByIdResponse;
 import com.atmosware.examService.Exam.usecases.getExam.GetExamUseCaseInput;
 import com.atmosware.examService.Exam.usecases.getExam.GetExamUseCaseOutput;
@@ -19,6 +23,10 @@ import com.atmosware.examService.usecase.UseCase;
 import com.atmosware.examService.usecase.VoidUseCase;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +45,8 @@ public class ExamController {
     private final VoidUseCase<StartExamUseCaseInput> startExamUseCase;
     private final VoidUseCase<RemoveQuestionVoidUseCaseInput> removeQuestionVoidUseCase;
     private final UseCase<UpdateExamUseCaseInput, UpdateExamUseCaseOutput> updateExamUseCase;
+    private final UseCase<GetAllExamUseCaseInput, GetAllExamUseCaseOutput> getAllExamUseCase;
+
 
     @PostMapping("/add")
     public ResponseEntity<CreatedExamResponse> createExam(@RequestBody CreateExamRequest createExamRequest, HttpServletRequest request) {
@@ -81,5 +91,26 @@ public class ExamController {
     @DeleteMapping("/remove-question")
     public void deleteQuestion(@RequestBody RemoveQuestionVoidUseCaseInput input, HttpServletRequest request){
         this.removeQuestionVoidUseCase.execute(input,request);
+    }
+
+    @GetMapping("/get-all-exam")
+    public ResponseEntity<Page<GetAllExamResponse>> getAllExam(@RequestParam int page,
+                                                                    @RequestParam int size, HttpServletRequest request){
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        GetAllExamUseCaseInput input = new GetAllExamUseCaseInput();
+        input.setGetAllExamRequest(new GetAllExamRequest());
+        input.getGetAllExamRequest().setPageable(pageable);
+
+        GetAllExamUseCaseOutput output = this.getAllExamUseCase.execute(input, request);
+
+        Page<GetAllExamResponse> responsePage = new PageImpl<>(
+                output.getGetAllExamResponse(),
+                pageable,
+                output.getGetAllExamResponse().size()
+        );
+
+        return new ResponseEntity<>(responsePage, HttpStatus.OK);
     }
 }

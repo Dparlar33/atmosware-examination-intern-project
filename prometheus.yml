@@ -5,19 +5,19 @@ scrape_configs:
   - job_name: 'managementService'
     metrics_path: '/actuator/prometheus'
     static_configs:
-      - targets: ['localhost:10044']
+      - targets: ['192.168.1.103:10044']
 
   - job_name: 'questionService'
     metrics_path: '/actuator/prometheus'
     static_configs:
-      - targets: [ 'localhost:10040' ]
+      - targets: [ '192.168.1.103:10040' ]
 
   - job_name: 'examService'
     metrics_path: '/actuator/prometheus'
     static_configs:
-      - targets: [ 'localhost:10033' ]
+      - targets: [ '192.168.1.103:10033' ]
 
   - job_name: 'invitationService'
     metrics_path: '/actuator/prometheus'
     static_configs:
-      - targets: [ 'localhost:10055' ]
+      - targets: [ '192.168.1.103:10055' ]

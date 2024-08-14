@@ -29,7 +29,7 @@ public class ExamBusinessRules {
     public void checkRequestRole(String requestRoleName, Exam exam,String userId) {
         if (! requestRoleName.equals("ADMIN")) {
             if (! exam.getUserId().equals(UUID.fromString(userId))){
-                throw new BusinessException(ExamMessages.INVALID_REQUEST_ROLE);
+                throw new BusinessException(ExamMessages.INVALID_REQUEST_ROLE_OR_USER);
             }
         }
     }

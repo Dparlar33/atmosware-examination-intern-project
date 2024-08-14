@@ -2,6 +2,7 @@ package com.atmosware.questionService.entities;
 
 
 import com.atmosware.questionService.core.entities.BaseEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -29,6 +30,6 @@ public class Question extends BaseEntity {
     private String imageUrl;
     private Status status;
 
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Option> options;
 }

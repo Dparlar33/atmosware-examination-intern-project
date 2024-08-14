@@ -1,13 +1,13 @@
 package com.atmosware.questionService.api.controllers;
 
 
-import com.atmosware.questionService.business.abstracts.OptionService;
 import com.atmosware.questionService.business.abstracts.QuestionService;
 import com.atmosware.questionService.business.dtos.requests.question.CreateQuestionRequest;
 import com.atmosware.questionService.business.dtos.requests.question.UpdateQuestionRequest;
 import com.atmosware.questionService.business.dtos.responses.question.GetAllQuestionsResponse;
 import com.atmosware.questionService.business.dtos.responses.question.GetQuestionByIdResponse;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,15 +22,14 @@ import java.util.UUID;
 public class QuestionController {
 
     private final QuestionService questionService;
-    private final OptionService optionService;
 
     @PostMapping("/add")
-    public void addQuestion(@RequestBody CreateQuestionRequest createQuestionRequest, HttpServletRequest httpServletRequest) {
+    public void addQuestion(@Valid @RequestBody CreateQuestionRequest createQuestionRequest, HttpServletRequest httpServletRequest) {
         this.questionService.addQuestion(createQuestionRequest, httpServletRequest);
     }
 
     @PutMapping("/update")
-    public void updateQuestion(@RequestBody UpdateQuestionRequest updateQuestionRequest, HttpServletRequest httpServletRequest) {
+    public void updateQuestion(@Valid @RequestBody UpdateQuestionRequest updateQuestionRequest, HttpServletRequest httpServletRequest) {
         this.questionService.updateQuestion(updateQuestionRequest, httpServletRequest);
     }
 
@@ -50,6 +49,5 @@ public class QuestionController {
     @DeleteMapping("/delete/{id}")
     public void deleteQuestion(@PathVariable UUID id, HttpServletRequest httpServletRequest) {
         this.questionService.deleteQuestion(id, httpServletRequest);
-        this.optionService.deleteOptionByQuestionId(id);
     }
 }

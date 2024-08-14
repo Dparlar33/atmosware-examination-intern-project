@@ -5,6 +5,7 @@ import com.atmosware.questionService.business.dtos.requests.option.CreateOptionR
 import com.atmosware.questionService.business.dtos.requests.option.UpdateOptionRequest;
 import com.atmosware.questionService.business.dtos.responses.option.GetAllOptionsResponse;
 import com.atmosware.questionService.business.dtos.responses.option.GetOptionByIdResponse;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,12 +22,12 @@ public class OptionController {
     private final OptionService optionService;
 
     @PostMapping("/add")
-    public void addOption  (@RequestBody CreateOptionRequest createOptionRequest) throws Exception {
+    public void addOption  (@Valid @RequestBody CreateOptionRequest createOptionRequest) throws Exception {
         this.optionService.addOption(createOptionRequest);
     }
 
     @PutMapping("/update")
-    public void updateOption(@RequestBody UpdateOptionRequest updateOptionRequest) {
+    public void updateOption(@Valid @RequestBody UpdateOptionRequest updateOptionRequest) {
         this.optionService.updateOption(updateOptionRequest);
     }
 
