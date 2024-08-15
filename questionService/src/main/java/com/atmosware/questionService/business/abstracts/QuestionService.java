@@ -5,6 +5,7 @@ import com.atmosware.questionService.business.dtos.requests.question.CreateQuest
 import com.atmosware.questionService.business.dtos.requests.question.UpdateQuestionRequest;
 import com.atmosware.questionService.business.dtos.responses.question.GetAllQuestionsResponse;
 import com.atmosware.questionService.business.dtos.responses.question.GetQuestionByIdResponse;
+import com.atmosware.questionService.entities.Question;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,4 +20,5 @@ public interface QuestionService {
     void updateQuestion(UpdateQuestionRequest updateQuestionRequest, HttpServletRequest httpServletRequest);
     void deleteQuestion(UUID id, HttpServletRequest httpServletRequest);
     void checkRulesOfOptionResponseList(List<OptionResponse> optionResponseList);
+    Question isQuestionExistById(UUID id);
 }

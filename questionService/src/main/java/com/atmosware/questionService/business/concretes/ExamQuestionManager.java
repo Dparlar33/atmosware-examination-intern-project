@@ -26,10 +26,9 @@ public class ExamQuestionManager implements ExamQuestionService {
     private QuestionMapper questionMapper;
 
     @Override
-    public GetQuestionAndOption getQuestionAndOptionById(UUID questionId) throws Exception {
+    public GetQuestionAndOption getQuestionAndOptionById(UUID questionId)  {
 
-        GetQuestionByIdResponse getQuestionByIdResponse = this.questionService.getQuestionById(questionId);
-        Question question = this.questionMapper.getQuestionByIdResponseToQuestion(getQuestionByIdResponse);
+        Question question = this.questionService.isQuestionExistById(questionId);
 
         List<OptionResponse> optionResponseList = this.optionService.getOptionsByQuestionId(questionId);
 
