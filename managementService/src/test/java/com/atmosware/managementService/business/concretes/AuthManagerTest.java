@@ -8,6 +8,7 @@ import com.atmosware.managementService.business.messages.AuthMessages;
 import com.atmosware.managementService.core.utilities.exceptions.types.BusinessException;
 import com.atmosware.managementService.dataAccess.UserRepository;
 import com.atmosware.managementService.entities.User;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -48,7 +49,7 @@ public class AuthManagerTest {
 
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.openMocks(this);
+      MockitoAnnotations.openMocks(this);
     }
 
     @Test

@@ -36,6 +36,7 @@ public class RoleManager implements RoleService {
     @Override
     public List<GetAllRolesResponse> getAllRoles() {
         List<Role> roles = this.roleRepository.findAll();
+
         return roles.stream().map(role -> roleMapper.roleToGetAllRolesResponse(role)).toList();
     }
 

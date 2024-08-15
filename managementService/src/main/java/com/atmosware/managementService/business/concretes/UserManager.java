@@ -38,9 +38,9 @@ public class UserManager implements UserService {
 
         User user = this.userMapper.registerRequestToUser(request);
 
-        String encodedPassword = passwordEncoder.encode(request.getPassword());
+        String encodedPassword = this.passwordEncoder.encode(request.getPassword());
         user.setPassword(encodedPassword);
-        userRepository.save(user);
+        this.userRepository.save(user);
 
         Role role = this.roleService.getRoleById(request.getRoleId());
         this.userRoleService.addUserRole(user,role);

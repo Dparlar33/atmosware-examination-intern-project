@@ -31,7 +31,6 @@ public class InvitationGrpcManagerTest {
 
     @Test
     public void testSendMail_Success() {
-        // Prepare request and response
         SendMailRequest request = SendMailRequest.newBuilder()
                 .setEmail("dp@gmail.com")
                 .setDescription("Sinav URL")
@@ -42,20 +41,19 @@ public class InvitationGrpcManagerTest {
                 .setMessage("Email Sent")
                 .build();
 
-        // Mock the service method
+
         when(invitationClientService.sendMail(request)).thenReturn(expectedResponse);
 
-        // Call the method under test
+
         invitationGrpcManager.sendMail(request, responseObserver);
 
-        // Verify interactions and responses
         verify(responseObserver).onNext(expectedResponse);
         verify(responseObserver).onCompleted();
     }
 
     @Test
     public void testSendMail_Failure() {
-        // Prepare request and simulate a failure response
+
         SendMailRequest request = SendMailRequest.newBuilder()
                 .setEmail("dp@gmail.com")
                 .setDescription("Sinav URL")
@@ -64,15 +62,15 @@ public class InvitationGrpcManagerTest {
 
         RuntimeException exception = new RuntimeException("Sending email failed");
 
-        // Mock the service method to throw an exception
+
         when(invitationClientService.sendMail(request)).thenThrow(exception);
 
-        // Call the method under test and handle the exception
+
         assertThrows(RuntimeException.class, () -> {
             invitationGrpcManager.sendMail(request, responseObserver);
         });
 
-        // Verify that no response is sent in case of failure
+
         verify(responseObserver, never()).onNext(any());
         verify(responseObserver, never()).onCompleted();
     }

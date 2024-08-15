@@ -9,11 +9,13 @@ import com.atmosware.managementService.business.messages.AuthMessages;
 import com.atmosware.managementService.business.messages.UserMessages;
 import com.atmosware.managementService.core.utilities.exceptions.types.BusinessException;
 import com.atmosware.managementService.core.utilities.mapping.UserMapper;
+import com.atmosware.managementService.core.utilities.mapping.UserMapperImpl;
 import com.atmosware.managementService.dataAccess.UserRepository;
 import com.atmosware.managementService.entities.Role;
 import com.atmosware.managementService.entities.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -24,6 +26,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -41,15 +44,14 @@ public class UserManagerTest {
     @Mock
     private RoleService roleService;
 
-    @Mock
-    private UserMapper userMapper;
-
     @InjectMocks
     private UserManager userManager;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
+        UserMapper userMapper = new UserMapperImpl();
+        userManager = new UserManager(userRepository, passwordEncoder, userRoleService, roleService, userMapper);
     }
 
     @Test
@@ -61,19 +63,26 @@ public class UserManagerTest {
 
         User user = new User();
         user.setId(UUID.randomUUID());
+        user.setEmail(registerRequest.getEmail());
+        user.setPassword("encodedPassword");
 
         Role role = new Role();
         role.setId(registerRequest.getRoleId());
 
         when(userRepository.findByEmail(registerRequest.getEmail())).thenReturn(Optional.empty());
-        when(userMapper.registerRequestToUser(registerRequest)).thenReturn(user);
         when(passwordEncoder.encode(registerRequest.getPassword())).thenReturn("encodedPassword");
         when(roleService.getRoleById(registerRequest.getRoleId())).thenReturn(role);
 
         userManager.register(registerRequest);
 
-        verify(userRepository).save(user);
-        verify(userRoleService).addUserRole(user, role);
+        ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
+        verify(userRepository).save(userCaptor.capture());
+
+        User capturedUser = userCaptor.getValue();
+        assertEquals(user.getEmail(), capturedUser.getEmail());
+        assertEquals("encodedPassword", capturedUser.getPassword());
+
+        verify(userRoleService).addUserRole(capturedUser, role);
     }
 
     @Test
@@ -83,7 +92,6 @@ public class UserManagerTest {
         user.setId(userId);
 
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
-        when(userMapper.userToGetUserById(user)).thenReturn(new GetUserByIdResponse());
 
         GetUserByIdResponse response = userManager.findUserById(userId);
 
@@ -99,14 +107,20 @@ public class UserManagerTest {
 
         User user = new User();
         user.setId(UUID.randomUUID());
+        user.setEmail("test@example.com");
+        user.setPassword("encodedNewPassword");
+
 
         when(userRepository.findByEmail(updateUserRequest.getEmail())).thenReturn(Optional.of(user));
-        when(userMapper.updateUserRequestToUser(updateUserRequest)).thenReturn(user);
         when(passwordEncoder.encode(updateUserRequest.getPassword())).thenReturn("encodedNewPassword");
 
         userManager.updateUser(updateUserRequest);
 
-        verify(userRepository).save(user);
+        // Argüman eşleştirme ile save() metodunun doğru nesneyi aldığından emin olun
+        verify(userRepository).save(argThat(userArg ->
+                userArg.getEmail().equals(user.getEmail()) &&
+                        userArg.getPassword().equals(user.getPassword())
+        ));
     }
 
     @Test

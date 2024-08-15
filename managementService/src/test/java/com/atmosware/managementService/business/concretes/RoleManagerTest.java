@@ -4,6 +4,7 @@ import com.atmosware.managementService.business.dtos.responses.role.GetAllRolesR
 import com.atmosware.managementService.business.messages.RoleMessages;
 import com.atmosware.managementService.core.utilities.exceptions.types.BusinessException;
 import com.atmosware.managementService.core.utilities.mapping.RoleMapper;
+import com.atmosware.managementService.core.utilities.mapping.RoleMapperImpl;
 import com.atmosware.managementService.dataAccess.RoleRepository;
 import com.atmosware.managementService.entities.Role;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,15 +26,14 @@ public class RoleManagerTest {
     @Mock
     private RoleRepository roleRepository;
 
-    @Mock
-    private RoleMapper roleMapper;
-
     @InjectMocks
     private RoleManager roleManager;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
+        RoleMapper roleMapper = new RoleMapperImpl();
+        roleManager = new RoleManager(roleRepository, roleMapper);
     }
 
     @Test
@@ -76,12 +76,8 @@ public class RoleManagerTest {
         role2.setName("USER");
 
         List<Role> roles = List.of(role1, role2);
-        GetAllRolesResponse response1 = new GetAllRolesResponse(role1.getId(), role1.getName());
-        GetAllRolesResponse response2 = new GetAllRolesResponse(role2.getId(), role2.getName());
 
         when(roleRepository.findAll()).thenReturn(roles);
-        when(roleMapper.roleToGetAllRolesResponse(role1)).thenReturn(response1);
-        when(roleMapper.roleToGetAllRolesResponse(role2)).thenReturn(response2);
 
         List<GetAllRolesResponse> responses = roleManager.getAllRoles();
 
@@ -90,8 +86,6 @@ public class RoleManagerTest {
         assertEquals("USER", responses.get(1).getName());
 
         verify(roleRepository).findAll();
-        verify(roleMapper).roleToGetAllRolesResponse(role1);
-        verify(roleMapper).roleToGetAllRolesResponse(role2);
     }
 
     @Test
