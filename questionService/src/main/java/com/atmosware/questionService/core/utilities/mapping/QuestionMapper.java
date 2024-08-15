@@ -20,4 +20,5 @@ public interface QuestionMapper {
     Question getQuestionByIdResponseToQuestion(GetQuestionByIdResponse getQuestionByIdResponse);
 
     Question updateQuestionRequestToQuestion(UpdateQuestionRequest updateQuestionRequest);
+    UpdateQuestionRequest questionToUpdateQuestionRequest(Question question);
 }
