@@ -7,7 +7,7 @@ import com.atmosware.managementService.business.dtos.requests.user.RegisterReque
 import com.atmosware.managementService.business.dtos.requests.user.UpdateUserRequest;
 import com.atmosware.managementService.business.dtos.responses.user.GetUserByIdResponse;
 import com.atmosware.managementService.business.messages.AuthMessages;
-import com.atmosware.managementService.business.rules.UserBusinessRules;
+import com.atmosware.managementService.business.messages.UserMessages;
 import com.atmosware.managementService.core.utilities.exceptions.types.BusinessException;
 import com.atmosware.managementService.core.utilities.mapping.UserMapper;
 import com.atmosware.managementService.dataAccess.UserRepository;
@@ -19,6 +19,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -29,12 +30,11 @@ public class UserManager implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRoleService userRoleService;
     private final RoleService roleService;
-    private final UserBusinessRules userBusinessRules;
     private final UserMapper userMapper;
 
     @Override
     public void register(RegisterRequest request) {
-        this.userBusinessRules.userEmailCanNotBeDuplicated(request.getEmail());
+        userEmailCanNotBeDuplicated(request.getEmail());
 
         User user = this.userMapper.registerRequestToUser(request);
 
@@ -48,13 +48,13 @@ public class UserManager implements UserService {
 
     @Override
     public GetUserByIdResponse findUserById(UUID id) {
-        User user = this.userBusinessRules.isUserExistById(id);
+        User user = isUserExistById(id);
         return  this.userMapper.userToGetUserById(user);
     }
 
     @Override
     public void updateUser(UpdateUserRequest updateUserRequest) {
-        this.userBusinessRules.isUserExistByEmail(updateUserRequest.getEmail());
+        isUserExistByEmail(updateUserRequest.getEmail());
 
         User user = this.userMapper.updateUserRequestToUser(updateUserRequest);
 
@@ -67,5 +67,27 @@ public class UserManager implements UserService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByEmail(username)
                 .orElseThrow(() -> new BusinessException(AuthMessages.LOGIN_FAILED));
+    }
+
+    public void userEmailCanNotBeDuplicated(String email) {
+        Optional<User> user = this.userRepository.findByEmail(email);
+        if (user.isPresent()) {
+            throw new BusinessException(UserMessages.USER_ALREADY_EXISTS);
+        }
+    }
+
+    public void isUserExistByEmail(String email) {
+        Optional<User> user = this.userRepository.findByEmail(email);
+        if (user.isEmpty()) {
+            throw new BusinessException(UserMessages.USER_NOT_FOUND);
+        }
+    }
+
+    public User isUserExistById(UUID id) {
+        Optional<User> user = this.userRepository.findById(id);
+        if (user.isEmpty()) {
+            throw new BusinessException(UserMessages.USER_NOT_FOUND);
+        }
+        return user.get();
     }
 }
