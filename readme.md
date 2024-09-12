@@ -1,4 +1,4 @@
-# General Talent Exam Simulation (Work In Progress)
+# General Talent Exam Simulation
 
 This project is a general talent exam simulation web application developed using the Java programming language. 
 
